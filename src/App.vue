@@ -9,7 +9,7 @@ setInterval(() => {
 </script>
 
 <template>
-  <div>
+  <div class="h-full">
     <header class="bg-white shadow" v-if="$route.meta.title">
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <h1
@@ -20,7 +20,7 @@ setInterval(() => {
         </h1>
       </div>
     </header>
-    <main>
+    <main class="h-full">
       <router-view />
     </main>
   </div>
