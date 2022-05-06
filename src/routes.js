@@ -1,18 +1,52 @@
-import Home from './views/Home.vue'
-import About from './views/About.vue'
-import NotFound from './views/NotFound.vue'
+import { createRouter, createWebHistory } from 'vue-router'
 
-/** @type {import('vue-router').RouterOptions['routes']} */
-export const routes = [
-  { path: '/', component: Home, meta: { title: 'Home' } },
+const LayoutAuth = () => import('@/layouts/LayoutAuth.vue');
+const LayoutAdmin = () => import('@/layouts/LayoutAdmin.vue');
+
+const HomePage = () => import('@/views/Home.vue');
+const About = () => import('@/views/About.vue');
+const Login = () => import('@/views/Auth/Login.vue');
+
+const routes = [
+  {
+    path: '/',
+    name: 'Root',
+    component: LayoutAdmin,
+    children: [{
+      path: '',
+      name: 'Home',
+      component: HomePage,
+    }],
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LayoutAuth,
+    children: [{
+      path: '',
+      name: 'LoginPage',
+      component: Login,
+    }],
+  },
   {
     path: '/about',
-    meta: { title: 'About' },
-    component: About,
-    // example of route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    // component: () => import('./views/About.vue')
+    name: 'About',
+    component: LayoutAdmin,
+    children: [{
+      path: '',
+      name: 'AboutPage',
+      component: About,
+    }],
   },
-  { path: '/:path(.*)', component: NotFound },
+  {
+    path: '/:path(.*)',
+    component: () => import('@/views/NotFound.vue')
+  },
 ]
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes
+})
+
+export default router;
