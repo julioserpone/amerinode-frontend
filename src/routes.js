@@ -10,36 +10,37 @@ const Login = () => import('@/views/Auth/Login.vue');
 const routes = [
   {
     path: '/',
-    name: 'Root',
+    name: 'root',
     component: LayoutAdmin,
     children: [{
       path: '',
-      name: 'Home',
+      name: 'home',
       component: HomePage,
     }],
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: LayoutAuth,
     children: [{
       path: '',
-      name: 'LoginPage',
+      name: 'login-page',
       component: Login,
     }],
   },
   {
     path: '/about',
-    name: 'About',
+    name: 'about',
     component: LayoutAdmin,
     children: [{
       path: '',
-      name: 'AboutPage',
+      name: 'about-page',
       component: About,
     }],
   },
   {
     path: '/:path(.*)',
+    name: 'not-found',
     component: () => import('@/views/NotFound.vue')
   },
 ]

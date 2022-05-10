@@ -6,15 +6,15 @@
           <div class="flex-shrink-0 pt-10 sm:pt-16">
             <a href="/" class="inline-flex">
               <span class="sr-only">Workflow</span>
-              <img class="h-32 w-auto" src="public/img/amerinode-logo-slogan.png" alt="" />
+              <img class="h-32 w-auto" src="../img/amerinode-logo-slogan.png" alt="" />
             </a>
           </div>
           <div class="flex-shrink-0 my-auto py-16 sm:py-32">
-            <p class="text-sm font-semibold text-indigo-600 uppercase tracking-wide">404 error</p>
+            <p class="text-sm font-semibold text-blue-600 uppercase tracking-wide">404 error</p>
             <h1 class="mt-2 text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">Page not found</h1>
             <p class="mt-2 text-base text-gray-500">Sorry, we couldn’t find the page you’re looking for.</p>
             <div class="mt-6">
-              <a href="#" class="text-base font-medium text-indigo-600 hover:text-indigo-500">Go back home<span aria-hidden="true"> &rarr;</span></a>
+              <a href="#" class="text-base font-medium text-blue-600 hover:text-blue-500">Go back home<span aria-hidden="true"> &rarr;</span></a>
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
       </footer>
     </div>
     <div class="hidden lg:block lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-      <img class="absolute inset-0 h-full w-full object-cover" src="public/img/404.jpg" alt="" />
+      <img class="absolute inset-0 h-full w-full object-cover" src="../img/404.jpg" alt="" />
     </div>
   </div>
 </template>
