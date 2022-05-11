@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="onSubmit" class="space-y-6">
+    <form @submit.prevent="login" class="space-y-6">
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700"> Email address </label>
         <div class="mt-1">
@@ -27,23 +27,22 @@
       </div>
 
       <div>
-        <LoadingButton :is-loading="isLoading">Prueba de boton</LoadingButton>
-        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Sign in</button>
+        <LoadingButton :is-loading="isLoading">Sign in</LoadingButton>
+        <!--<button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Sign in</button>-->
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import {ref} from "vue";
+
 import service from "../../services/login.service.js"
 import LoadingButton from "@/components/LoadingButton.vue";
-//const isLoading = ref(false);
+import {notify} from "notiwind";
 
 export default {
   components: {
     LoadingButton
-
   },
   name: 'auth-login',
   metaInfo: {
@@ -51,7 +50,6 @@ export default {
   },
   data: () => ({
     isLoading: false,
-    errorMessage: null,
     credentials: {
       email: 'superadmin@domain.com', // 'superadmin@domain.com',
       password: '123456', // '123456',
@@ -59,14 +57,21 @@ export default {
     }
   }),
   methods: {
-    onSubmit() {
+    /*onSubmit() {
       this.isLoading = true
-      setTimeout(() => this.isLoading = false, 10000)
-    },
+      setTimeout(() => this.isLoading = false, 2000)
+      notify({
+        group: "top",
+        title: "Success",
+        text: "Your account was created 👌",
+        type: "success"
+      }, 30000)
+
+    },*/
     login() {
-      this.error = false;
       if (this.credentials.email !== '' && this.credentials.password !== '') {
         this.isLoading = true;
+        //Invoke login service
         service.login(this.credentials).then(x => {
           localStorage.setItem('jwt', x.data.token);
           localStorage.setItem('user', JSON.stringify(x.data.user));
@@ -78,9 +83,13 @@ export default {
           } else {
             this.$router.push({ name: 'home' })
           }
-        }).catch(() => {
-          this.error = true;
-          this.errorMessage = 'Credentials are wrong';
+        }).catch(err => {
+          notify({
+            group: "top",
+            title: "Error",
+            text: err.response.data.message,
+            type: "error"
+          }, 5000)
           this.credentials.password = ''
         }).finally(() => {
           setTimeout(() => {

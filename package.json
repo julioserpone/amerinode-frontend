@@ -7,7 +7,10 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@vue-hero-icons/outline": "^1.7.2",
+    "@vue-hero-icons/solid": "^1.7.2",
     "axios": "^0.27.2",
+    "notiwind": "^1.2.5",
     "vue": "^3.2.33",
     "vue-router": "^4.0.15"
   },

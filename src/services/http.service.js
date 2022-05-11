@@ -40,13 +40,15 @@ httpClient.interceptors.response.use(
     },
     error => {
         if (error.response.status === 401) {
+            console.log('error 401')
             if (localStorage.getItem('url') === null) {
                 localStorage.setItem('url', window.location.href)
             }
             // remove the user logged in storage
             localStorage.removeItem('jwt')
             localStorage.removeItem('user')
-            router.push({ name: 'login' }).then()
+            //TODO: Validar previamente que el 401 no provenga del login, ya que al realizar un push sobre la misma página no se renderiza el router-view del LayoutAuth
+            //router.push({ name: 'login' }).then()
         }
         return Promise.reject(error)
     }
