@@ -81,16 +81,19 @@ export default {
             localStorage.removeItem('url')
             window.location.href = fromNav
           } else {
-            this.$router.push({ name: 'home' })
+            this.$router.push({ name: 'Home' })
           }
         }).catch(err => {
-          notify({
-            group: "top",
-            title: "Error",
-            text: err.response.data.message,
-            type: "error"
-          }, 5000)
-          this.credentials.password = ''
+          if (err.code !== "ERR_NETWORK") {
+            console.log(err);
+            notify({
+              group: "top",
+              title: "Error",
+              text: err.response.data.message,
+              type: "error"
+            }, 5000)
+            this.credentials.password = ''
+          }
         }).finally(() => {
           setTimeout(() => {
             this.isLoading = false

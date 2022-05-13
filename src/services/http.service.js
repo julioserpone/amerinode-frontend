@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '../routes.js'
+import {notify} from "notiwind";
 
 /**
  *
@@ -39,16 +40,25 @@ httpClient.interceptors.response.use(
         return response
     },
     error => {
-        if (error.response.status === 401) {
-            console.log('error 401')
-            if (localStorage.getItem('url') === null) {
-                localStorage.setItem('url', window.location.href)
+        //API server offline
+        if (error.code == "ERR_NETWORK") {
+            notify({
+                group: "top",
+                title: "Error",
+                text: "Offline server. Please try your request later",
+                type: "error"
+            }, 5000)
+        } else {
+            if (error.response.status === 401) {
+                if (localStorage.getItem('url') === null) {
+                    localStorage.setItem('url', window.location.href)
+                }
+                // remove the user logged in storage
+                localStorage.removeItem('jwt')
+                localStorage.removeItem('user')
+
+                //router.push({ name: 'login' }).then()
             }
-            // remove the user logged in storage
-            localStorage.removeItem('jwt')
-            localStorage.removeItem('user')
-            //TODO: Validar previamente que el 401 no provenga del login, ya que al realizar un push sobre la misma página no se renderiza el router-view del LayoutAuth
-            //router.push({ name: 'login' }).then()
         }
         return Promise.reject(error)
     }
