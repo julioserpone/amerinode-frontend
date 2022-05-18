@@ -3,9 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 const LayoutAuth = () => import('@/layouts/LayoutAuth.vue');
 const LayoutAdmin = () => import('@/layouts/LayoutAdmin.vue');
 
-const HomePage = () => import('@/views/Home.vue');
-const About = () => import('@/views/About.vue');
-const Login = () => import('@/views/Auth/Login.vue');
+const HomePage = () => import('@/views/HomePage.vue');
+const About = () => import('@/views/AboutPage.vue');
+const Login = () => import('@/views/Auth/LoginPage.vue');
 
 const routes = [
   {
@@ -50,7 +50,7 @@ const routes = [
   {
     path: '/:path(.*)',
     name: 'NotFound',
-    component: () => import('@/views/NotFound.vue'),
+    component: () => import('@/views/NotFoundPage.vue'),
     meta: {
       authRequired: false
     },
