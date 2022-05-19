@@ -1,6 +1,7 @@
 import axios from 'axios'
-//import router from '../routes.js'
+import router from '../routes.js'
 import {notify} from "notiwind";
+import { EncryptStorage } from 'encrypt-storage';
 
 /**
  *
@@ -14,14 +15,18 @@ const config = {
     }
 }
 const httpClient = axios.create(config)
-//console.log(import.meta.env)
+export const encryptStorage = new EncryptStorage(import.meta.env.VITE_SECRET_KEY, {
+    prefix: '@app',
+    storageType: "localStorage"
+});
+
 /**
  * @param config
  * @returns {*}
  */
 const authInterceptor = config => {
     /** add auth token */
-    const token = localStorage.getItem('jwt')
+    const token = encryptStorage.getItem('jwt')
     config.headers.Authorization = `Bearer ${token}`
     return config
 }
@@ -41,7 +46,7 @@ httpClient.interceptors.response.use(
     },
     error => {
         //API server offline
-        if (error.code == "ERR_NETWORK") {
+        if (error.code === "ERR_NETWORK") {
             notify({
                 group: "top",
                 title: "Error",
@@ -50,14 +55,14 @@ httpClient.interceptors.response.use(
             }, 5000)
         } else {
             if (error.response.status === 401) {
-                if (localStorage.getItem('url') === null) {
-                    localStorage.setItem('url', window.location.href)
+
+                if (encryptStorage.getItem('url') === null) {
+                    encryptStorage.setItem('url', window.location.href)
                 }
                 // remove the user logged in storage
-                localStorage.removeItem('jwt')
-                localStorage.removeItem('user')
+                encryptStorage.clear()
 
-                //router.push({ name: 'login' }).then()
+                router.push({ name: 'Login' }).then()
             }
         }
         return Promise.reject(error)

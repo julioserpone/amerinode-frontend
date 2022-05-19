@@ -24,14 +24,11 @@
 </template>
 
 <script>
-//const HeaderComponent = () => import('@/components/base/Header');
-//const FooterComponent = () => import('@/components/base/Footer');
 
 export default {
   name: 'LayoutAuth',
   components: {
 
   },
-  created () { console.log('created: layout auth static') },
 };
 </script>

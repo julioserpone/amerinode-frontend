@@ -17,18 +17,17 @@
 
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <input id="remember-me" name="remember-me" type="checkbox" v-model="credentials.rememberMe" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+          <input id="remember-me" name="remember-me" type="checkbox" v-model="credentials.rememberMe" class="h-4 w-4 text-amerinode-blue-600 focus:ring-amerinode-blue-500 border-gray-300 rounded" />
           <label for="remember-me" class="ml-2 block text-sm text-gray-900"> Remember me </label>
         </div>
 
         <div class="text-sm">
-          <a href="#" class="font-medium text-blue-600 hover:text-blue-500"> Forgot your password? </a>
+          <a href="#" class="font-medium text-blue-600 hover:text-amerinode-blue-500"> Forgot your password? </a>
         </div>
       </div>
 
       <div>
-        <LoadingButton :is-loading="isLoading">Sign in</LoadingButton>
-        <!--<button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Sign in</button>-->
+        <LoadingButton :is-loading="isLoading" background-color="bg-amerinode-blue-600">Sign in</LoadingButton>
       </div>
     </form>
   </div>
@@ -36,9 +35,10 @@
 
 <script>
 
-import service from "../../services/login.service.js"
+import service from "../../services/auth.service.js"
 import LoadingButton from "@/components/LoadingButton.vue";
 import {notify} from "notiwind";
+import {encryptStorage} from "@/services/http.service";
 
 export default {
   components: {
@@ -57,35 +57,24 @@ export default {
     }
   }),
   methods: {
-    /*onSubmit() {
-      this.isLoading = true
-      setTimeout(() => this.isLoading = false, 2000)
-      notify({
-        group: "top",
-        title: "Success",
-        text: "Your account was created 👌",
-        type: "success"
-      }, 30000)
-
-    },*/
     login() {
       if (this.credentials.email !== '' && this.credentials.password !== '') {
         this.isLoading = true;
         //Invoke login service
         service.login(this.credentials).then(x => {
-          localStorage.setItem('jwt', x.data.token);
-          localStorage.setItem('user', JSON.stringify(x.data.user));
-          let fromNav = localStorage.getItem('url')
+          encryptStorage.setItem('jwt', x.data.token);
+          encryptStorage.setItem('user', JSON.stringify(x.data.user));
+          console.log('token: '+encryptStorage.getItem('jwt'))  //TO-DO: delete this line
+          let fromNav = encryptStorage.getItem('url')
 
           if (fromNav) {
-            localStorage.removeItem('url')
+            encryptStorage.removeItem('url')
             window.location.href = fromNav
           } else {
             this.$router.push({ name: 'Home' })
           }
         }).catch(err => {
           if (err.code !== "ERR_NETWORK") {
-            console.log(err);
             notify({
               group: "top",
               title: "Error",

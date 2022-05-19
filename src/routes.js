@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import {encryptStorage} from "@/services/http.service";
 
 const LayoutAuth = () => import('@/layouts/LayoutAuth.vue');
 const LayoutAdmin = () => import('@/layouts/LayoutAdmin.vue');
@@ -62,9 +63,7 @@ const router = createRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  let isAuthenticated = (localStorage.getItem('jwt') !== null);
-  //console.log(to, from, 'isAuthenticated: '+isAuthenticated)
-
+  let isAuthenticated = (encryptStorage.getItem('jwt') !== null && encryptStorage.getItem('jwt') !== undefined);
   if (!isAuthenticated && to.name !== 'LoginPage') { next({ name: 'LoginPage' }) }
   else {
     if (to.name === 'LoginPage' && isAuthenticated) next({ name: 'Home' })

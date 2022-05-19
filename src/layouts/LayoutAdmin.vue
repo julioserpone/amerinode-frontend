@@ -40,9 +40,9 @@ const navigationItems = [
   { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '/logout' },
+  { name: 'Your Profile', href: 'profile', page: 'ProfilePage' },
+  { name: 'Settings', href: 'setting', page: 'SettingsPage' },
+  { name: 'Sign out', href: 'logout', page: 'Logout' },
 ]
 
 </script>
