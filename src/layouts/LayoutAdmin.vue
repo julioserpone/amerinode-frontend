@@ -10,9 +10,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {ref} from 'vue'
 import NavBar from '@/components/NavBar.vue'
 import SideBar from '@/components/SideBar.vue'
+import {encryptStorage} from "@/services/http.service";
 
 import {
   CalendarIcon,
@@ -31,7 +32,12 @@ const changeSideBar = (val) => {
   sidebarOpen.value = val
 }
 
-const navigationItems = [
+let items = encryptStorage.getItem('navigation')
+console.log(items)
+/*items.forEach(function (item) {
+  console.log(item)
+})*/
+let navigationItems = [
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
   { name: 'Team', href: '#', icon: UsersIcon, current: false },
   { name: 'Projects', href: '#', icon: FolderIcon, current: false },
@@ -39,6 +45,7 @@ const navigationItems = [
   { name: 'Documents', href: '#', icon: InboxIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
 ]
+
 const userNavigation = [
   { name: 'Your Profile', href: 'profile', page: 'ProfilePage' },
   { name: 'Settings', href: 'setting', page: 'SettingsPage' },

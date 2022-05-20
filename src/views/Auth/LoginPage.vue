@@ -63,7 +63,8 @@ export default {
         //Invoke login service
         service.login(this.credentials).then(x => {
           encryptStorage.setItem('jwt', x.data.token);
-          encryptStorage.setItem('user', JSON.stringify(x.data.user));
+          encryptStorage.setItem('user', JSON.stringify(x.data.user))
+          encryptStorage.setItem('navigation', JSON.stringify(x.data.navigation));
           console.log('token: '+encryptStorage.getItem('jwt'))  //TO-DO: delete this line
           let fromNav = encryptStorage.getItem('url')
 
