@@ -6,8 +6,10 @@ const LayoutAuth = () => import('@/layouts/LayoutAuth.vue');
 const LayoutAdmin = () => import('@/layouts/LayoutAdmin.vue');
 
 const HomePage = () => import('@/views/HomePage.vue');
+const UserListPage = () => import('@/views/Users/UserListPage.vue');
 const About = () => import('@/views/AboutPage.vue');
 const Login = () => import('@/views/Auth/LoginPage.vue');
+
 let defaultPage = localStorage.getItem('DefaultPage') || 'DashboardPage';
 
 const routes = [
@@ -30,7 +32,7 @@ const routes = [
         }
       },
       {
-        path: 'parametric',
+        path: '/parametric',
         name: 'ParametricPage',
         component: About,
         meta: {
@@ -38,13 +40,20 @@ const routes = [
         },
       },
       {
-        path: 'tickets-package',
+        path: '/tickets-package',
         name: 'TicketsPackagePage',
         component: About,
         meta: {
           requiresAuth: true
         },
-      }
+      },{
+        path: '/users',
+        name: 'UsersPage',
+        component: UserListPage,
+        meta: {
+          requiresAuth: true
+        },
+      },
     ],
   },
   {
