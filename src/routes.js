@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import {encryptStorage} from "@/services/http.service";
+import {notify} from "notiwind";
 
 const LayoutAuth = () => import('@/layouts/LayoutAuth.vue');
 const LayoutAdmin = () => import('@/layouts/LayoutAdmin.vue');
@@ -7,20 +8,44 @@ const LayoutAdmin = () => import('@/layouts/LayoutAdmin.vue');
 const HomePage = () => import('@/views/HomePage.vue');
 const About = () => import('@/views/AboutPage.vue');
 const Login = () => import('@/views/Auth/LoginPage.vue');
+let defaultPage = localStorage.getItem('DefaultPage') || 'DashboardPage';
 
 const routes = [
   {
     path: '/',
     name: 'Root',
     component: LayoutAdmin,
-    children: [{
-      path: '',
-      name: 'Home',
-      component: HomePage,
-      meta: {
-        authRequired: true
+    children: [
+      {
+        path: '',
+        name: 'HomePage',
+        redirect: { name: localStorage.getItem('DefaultPage') || 'DashboardPage' }
       },
-    }],
+      {
+        path: '/dashboard',
+        name: 'DashboardPage',
+        component: HomePage,
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'parametric',
+        name: 'ParametricPage',
+        component: About,
+        meta: {
+          requiresAuth: true
+        },
+      },
+      {
+        path: 'tickets-package',
+        name: 'TicketsPackagePage',
+        component: About,
+        meta: {
+          requiresAuth: true
+        },
+      }
+    ],
   },
   {
     path: '/login',
@@ -31,7 +56,7 @@ const routes = [
       name: 'LoginPage',
       component: Login,
       meta: {
-        authRequired: false
+        requiresAuth: false
       },
     }],
   },
@@ -44,7 +69,7 @@ const routes = [
       name: 'AboutPage',
       component: About,
       meta: {
-        authRequired: true
+        requiresAuth: true
       },
     }],
   },
@@ -53,7 +78,7 @@ const routes = [
     name: 'NotFound',
     component: () => import('@/views/NotFoundPage.vue'),
     meta: {
-      authRequired: false
+      requiresAuth: false
     },
   },
 ]
@@ -63,11 +88,32 @@ const router = createRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
+
   let isAuthenticated = (encryptStorage.getItem('jwt') !== null && encryptStorage.getItem('jwt') !== undefined);
   if (!isAuthenticated && to.name !== 'LoginPage') { next({ name: 'LoginPage' }) }
   else {
-    if (to.name === 'LoginPage' && isAuthenticated) next({ name: 'Home' })
-    else next();
+    if (isAuthenticated && to.name === 'LoginPage') next({ name: 'HomePage' })
+    else {
+      if (to.name !== 'LoginPage' && to.name !== 'NotFound') {
+        let routeAuthorized = false;
+        let navigationItems = encryptStorage.getItem('navigation')
+        navigationItems.forEach(function (item) {
+          if (item.name === to.name) {
+            routeAuthorized = true;
+          }
+        })
+        if (!routeAuthorized) {
+          notify({
+            group: "top",
+            title: "Error",
+            text: "You are not authorized to enter the requested route",
+            type: "error"
+          }, 5000)
+          router.push({name: defaultPage }).then()
+        }
+      }
+      next();
+    }
   }
 })
 

@@ -22,10 +22,15 @@
               </div>
               <div class="mt-5 flex-1 h-0 overflow-y-auto">
                 <nav class="px-2 space-y-1">
-                  <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']">
-                    <component :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-4 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
-                    {{ item.name }}
-                  </a>
+                  <router-link v-for="item in navigation"
+                               :to="item.href"
+                               custom
+                               v-slot="{ href, route, navigate, isActive, isExactActive}">
+                    <a :key="item.href" :href="item.href" :class="[isExactActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+                      <component :is="item.icon" :class="[isExactActive ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
+                      {{ item.description }}
+                    </a>
+                  </router-link>
                 </nav>
               </div>
             </DialogPanel>
@@ -46,10 +51,15 @@
         </div>
         <div class="mt-5 flex-1 flex flex-col">
           <nav class="flex-1 px-2 pb-4 space-y-1">
-            <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
-              <component :is="item.icon" :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
-              {{ item.name }}
-            </a>
+            <router-link v-for="item in navigation"
+                         :to="item.href"
+                         custom
+                         v-slot="{ href, route, navigate, isActive, isExactActive}">
+              <a :key="item.href" :href="item.href" :class="[isExactActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+                <component :is="item.icon" :class="[isExactActive ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
+                {{ item.description }}
+              </a>
+            </router-link>
           </nav>
         </div>
       </div>
@@ -75,34 +85,4 @@
     //console.log('cerrar sidebar')
     emit('sideBarOpen', false)
   }
-
-/*export default {
-  setup() {
-    const navigation = [
-      { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-      { name: 'Team', href: '#', icon: UsersIcon, current: false },
-      { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-      { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-      { name: 'Documents', href: '#', icon: InboxIcon, current: false },
-      { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
-    ]
-  return {
-      sidebarOpen,
-      navigation
-    }
-  },
-  components: {
-    TransitionRoot,
-    TransitionChild,
-    Dialog,
-    DialogPanel,
-    XIcon,
-    HomeIcon,
-    UsersIcon,
-    FolderIcon,
-    CalendarIcon,
-    InboxIcon,
-    ChartBarIcon
-  }
-}*/
 </script>

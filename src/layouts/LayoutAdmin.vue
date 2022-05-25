@@ -10,18 +10,22 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, onBeforeMount} from 'vue'
 import NavBar from '@/components/NavBar.vue'
 import SideBar from '@/components/SideBar.vue'
 import {encryptStorage} from "@/services/http.service";
 
 import {
-  CalendarIcon,
-  ChartBarIcon,
-  FolderIcon,
-  HomeIcon,
-  InboxIcon,
-  UsersIcon,
+  ChartSquareBarIcon,
+  TicketIcon,
+  BriefcaseIcon,
+  PresentationChartLineIcon,
+  TableIcon,
+  KeyIcon,
+  FolderOpenIcon,
+  UserGroupIcon,
+  DocumentReportIcon,
+  UsersIcon
 } from '@heroicons/vue/outline'
 
 //global declare for layoutAdmin
@@ -31,20 +35,46 @@ const sidebarOpen = ref(false)
 const changeSideBar = (val) => {
   sidebarOpen.value = val
 }
+let navigationItems = encryptStorage.getItem('navigation')
 
-let items = encryptStorage.getItem('navigation')
-console.log(items)
-/*items.forEach(function (item) {
-  console.log(item)
-})*/
-let navigationItems = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Documents', href: '#', icon: InboxIcon, current: false },
-  { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
-]
+onBeforeMount(() => {
+  //heroicons type target assignment for menu items
+  navigationItems.forEach(function (item) {
+    switch (item.icon) {
+      case 'ChartSquareBarIcon':
+        item.icon = ChartSquareBarIcon
+        break;
+      case 'TicketIcon':
+        item.icon = TicketIcon
+        break
+      case 'BriefcaseIcon':
+        item.icon = BriefcaseIcon
+        break;
+      case 'PresentationChartLineIcon':
+        item.icon = PresentationChartLineIcon
+        break;
+      case 'TableIcon':
+        item.icon = TableIcon
+        break;
+      case 'KeyIcon':
+        item.icon = KeyIcon
+        break;
+      case 'FolderOpenIcon':
+        item.icon = FolderOpenIcon
+        break;
+      case 'UserGroupIcon':
+        item.icon = UserGroupIcon
+        break;
+      case 'DocumentReportIcon':
+        item.icon = DocumentReportIcon
+        break;
+      case 'UsersIcon':
+        item.icon = UsersIcon
+        break;
+    }
+    item.current = false;
+  })
+})
 
 const userNavigation = [
   { name: 'Your Profile', href: 'profile', page: 'ProfilePage' },

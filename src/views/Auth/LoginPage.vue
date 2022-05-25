@@ -36,9 +36,9 @@
 <script>
 
 import service from "../../services/auth.service.js"
-import LoadingButton from "@/components/LoadingButton.vue";
-import {notify} from "notiwind";
 import {encryptStorage} from "@/services/http.service";
+import {notify} from "notiwind";
+import LoadingButton from "@/components/LoadingButton.vue";
 
 export default {
   components: {
@@ -65,6 +65,8 @@ export default {
           encryptStorage.setItem('jwt', x.data.token);
           encryptStorage.setItem('user', JSON.stringify(x.data.user))
           encryptStorage.setItem('navigation', JSON.stringify(x.data.navigation));
+          localStorage.setItem('DefaultPage', x.data.defaultPage);
+
           console.log('token: '+encryptStorage.getItem('jwt'))  //TO-DO: delete this line
           let fromNav = encryptStorage.getItem('url')
 
@@ -72,7 +74,7 @@ export default {
             encryptStorage.removeItem('url')
             window.location.href = fromNav
           } else {
-            this.$router.push({ name: 'Home' })
+            this.$router.push({ name: x.data.defaultPage  })
           }
         }).catch(err => {
           if (err.code !== "ERR_NETWORK") {

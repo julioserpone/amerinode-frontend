@@ -62,7 +62,7 @@ httpClient.interceptors.response.use(
                 // remove the user logged in storage
                 encryptStorage.clear()
 
-                router.push({ name: 'Login' }).then()
+                router.push({ name: 'LoginPage' }).then()
             }
         }
         return Promise.reject(error)

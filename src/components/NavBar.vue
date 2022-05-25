@@ -83,7 +83,7 @@
     authService.logout().then(response => {
       if (response.status === 200) {
         encryptStorage.clear();
-        router.push({ name: 'Login' })
+        router.push({ name: 'LoginPage' })
       }
     }).catch(err => {
       if (err.code !== "ERR_NETWORK") {
