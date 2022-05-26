@@ -24,8 +24,9 @@
                 <nav class="px-2 space-y-1">
                   <router-link v-for="item in navigation"
                                :to="item.href"
+                               v-bind:key="item.name"
                                custom
-                               v-slot="{ href, route, navigate, isActive, isExactActive}">
+                               v-slot="{ isExactActive}">
                     <a :key="item.href" :href="item.href" :class="[isExactActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
                       <component :is="item.icon" :class="[isExactActive ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
                       {{ item.description }}
@@ -53,8 +54,9 @@
           <nav class="flex-1 px-2 pb-4 space-y-1">
             <router-link v-for="item in navigation"
                          :to="item.href"
+                         v-bind:key="item.name"
                          custom
-                         v-slot="{ href, route, navigate, isActive, isExactActive}">
+                         v-slot="{ isExactActive}">
               <a :key="item.href" :href="item.href" :class="[isExactActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
                 <component :is="item.icon" :class="[isExactActive ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
                 {{ item.description }}
