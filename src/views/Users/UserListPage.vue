@@ -55,7 +55,7 @@
         <div class="sm:flex sm:items-center">
           <div class="sm:flex-auto">
             <h1 class="text-xl font-semibold text-gray-900">Users</h1>
-            <p class="mt-2 text-sm text-gray-700">A list of all the users in your account including their name, title, email and role.</p>
+            <p class="mt-2 text-sm font-normal text-gray-700">A list of all the users in your account including their name, title, email and role.</p>
           </div>
           <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
@@ -115,7 +115,7 @@ import InputText from 'primevue/inputtext';
 
 let users = ref()
 let loading = ref(true)
-let selectedUsers = ref(Object)
+let selectedUsers = ref()
 let filters = ref({
   'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
   'name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
@@ -125,9 +125,7 @@ let filters = ref({
 
 onMounted(() => {
   userService.users().then(x => {
-    //console.log(x.data)
     users.value = x.data
-
   }).catch(err => {
 
   }).finally(() => {
