@@ -26,9 +26,9 @@
                                :to="item.href"
                                v-bind:key="item.name"
                                custom
-                               v-slot="{ isExactActive}">
-                    <a :key="item.href" :href="item.href" :class="[isExactActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
-                      <component :is="item.icon" :class="[isExactActive ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
+                               v-slot="{ href, isActive, isExactActive}">
+                    <a :key="item.name" :href="href" :class="[isExactActive || isActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+                      <component :is="item.icon" :class="[isExactActive || isActive ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
                       {{ item.description }}
                     </a>
                   </router-link>
@@ -56,9 +56,9 @@
                          :to="item.href"
                          v-bind:key="item.name"
                          custom
-                         v-slot="{ isExactActive}">
-              <a :key="item.href" :href="item.href" :class="[isExactActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
-                <component :is="item.icon" :class="[isExactActive ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
+                         v-slot="{ href, isActive, isExactActive}">
+              <a :key="item.name" :href="href" :class="[isExactActive || isActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+                <component :is="item.icon" :class="[isExactActive || isActive ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']" aria-hidden="true" />
                 {{ item.description }}
               </a>
             </router-link>

@@ -1,13 +1,19 @@
 import httpService from './http.service.js'
 
 export default {
-    users (payload) {
-        return httpService.get('users', payload)
+    list (params) {
+        return httpService.get('users', params)
     },
-    token (payload) {
-        return httpService.post('token', payload)
+    get (id) {
+        return httpService.get(`users/${id}`)
     },
-    logout (payload) {
-        return httpService.post('logout', payload)
+    delete (id) {
+        return httpService.delete(`users/${id}`)
+    },
+    save (id, params) {
+        if(id) {
+            return  httpService.put(`users/${id}`, params)
+        }
+        return httpService.post(`users`, params)
     }
 }

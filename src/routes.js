@@ -1,14 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import {encryptStorage} from "@/services/http.service";
-import {notify} from "notiwind";
+import { encryptStorage } from "@/services/http.service";
+import { notify } from "notiwind";
 
 const LayoutAuth = () => import('@/layouts/LayoutAuth.vue');
 const LayoutAdmin = () => import('@/layouts/LayoutAdmin.vue');
 
-const HomePage = () => import('@/views/HomePage.vue');
-const UserListPage = () => import('@/views/Users/UserListPage.vue');
 const About = () => import('@/views/AboutPage.vue');
-const Login = () => import('@/views/Auth/LoginPage.vue');
 
 let defaultPage = localStorage.getItem('DefaultPage') || 'DashboardPage';
 
@@ -22,39 +19,81 @@ const routes = [
         path: '',
         name: 'HomePage',
         redirect: { name: localStorage.getItem('DefaultPage') || 'DashboardPage' }
+      }
+    ],
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: LayoutAdmin,
+    children: [{
+      path: '',
+      component: () => import('@/views/HomePage.vue'),
+      name: 'DashboardPage',
+      meta: {
+        requiresAuth: true,
+        page: 'DashboardPage'
+      }
+    }]
+  },
+  {
+    path: '/parametric',
+    name: 'Parametric',
+    component: LayoutAdmin,
+    children: [{
+      path: '',
+      component: About,
+      name: 'ParametricPage',
+      meta: {
+        requiresAuth: true,
+        page: 'ParametricPage'
       },
+    }]
+  },
+  {
+    path: '/tickets-package',
+    name: 'TicketsPackagePage',
+    component: LayoutAdmin,
+    children: [{
+      path: '',
+      component: About,
+      name: 'TicketsPackagePage',
+      meta: {
+        requiresAuth: true,
+        page: 'TicketsPackagePage'
+      },
+    }]
+  },
+  {
+    path: '/users',
+    component: LayoutAdmin,
+    name: 'User',
+    children: [
       {
-        path: '/dashboard',
-        name: 'DashboardPage',
-        component: HomePage,
+        path: '',
+        name: 'UserList',
+        component: () => import('@/views/Users/UserListPage.vue'),
         meta: {
-          requiresAuth: true
+          page: 'UsersPage'
         }
       },
       {
-        path: '/parametric',
-        name: 'ParametricPage',
-        component: About,
+        path: ':userId(\\d+)',
+        name: 'UserShow',
+        component: () => import('@/views/Users/UserShow.vue'),
         meta: {
-          requiresAuth: true
-        },
+          page: 'UsersPage'
+        }
       },
       {
-        path: '/tickets-package',
-        name: 'TicketsPackagePage',
-        component: About,
+        path: 'create',
+        name: 'UserCreate',
+        component: () => import('@/views/Users/UserCreate.vue'),
         meta: {
-          requiresAuth: true
-        },
-      },{
-        path: '/users',
-        name: 'UsersPage',
-        component: UserListPage,
-        meta: {
-          requiresAuth: true
-        },
-      },
-    ],
+          page: 'UsersPage'
+        }
+      }
+    ]
   },
   {
     path: '/login',
@@ -63,7 +102,7 @@ const routes = [
     children: [{
       path: '',
       name: 'LoginPage',
-      component: Login,
+      component: () => import('@/views/Auth/LoginPage.vue'),
       meta: {
         requiresAuth: false
       },
@@ -107,7 +146,7 @@ router.beforeEach((to, from, next) => {
         let routeAuthorized = false;
         let navigationItems = encryptStorage.getItem('navigation')
         navigationItems.forEach(function (item) {
-          if (item.name === to.name) {
+          if (item.name === to.meta.page) {
             routeAuthorized = true;
           }
         })

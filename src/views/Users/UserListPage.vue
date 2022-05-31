@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class="px-4 py-4 sm:px-6 lg:px-8">
-      <div class="sm:flex sm:items-center">
+      <!--<div class="sm:flex sm:items-center">
         <div class="sm:flex-auto">
           <h1 class="text-xl font-semibold text-gray-900">Users</h1>
           <p class="mt-2 text-sm text-gray-700">A list of all the users in your account including their name, title, email and role.</p>
@@ -10,12 +10,68 @@
         <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-amerinode-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amerinode-blue-700 focus:outline-none focus:ring-2 focus:ring-amerinode-blue-500 focus:ring-offset-2 sm:w-auto">Add user</button>
         </div>
-      </div>
+      </div>-->
       <div class="mt-8 flex flex-col">
         <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
             <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-              <table class="min-w-full divide-y divide-gray-300">
+              <DataTable :value="users" :paginator="true" :rows="5"
+                         dataKey="id" :rowHover="true" v-model:selection="selectedUsers" v-model:filters="filters" filterDisplay="menu" :loading="loading"
+                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[5,10,25,50]"
+                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                         :globalFilterFields="['name','username','email']" responsiveLayout="scroll">
+                <template #header>
+                  <div class="sm:flex sm:items-center">
+                    <div class="sm:flex-auto">
+                      <h1 class="text-xl font-semibold text-gray-900">Users</h1>
+                      <p class="mt-2 text-sm font-normal text-gray-700">A list of all the users in your account including their name, title, email and role.</p>
+                    </div>
+                    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                      <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+                      <button type="button" class=" ml-4 inline-flex items-center justify-center rounded-md border border-transparent bg-amerinode-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amerinode-blue-700 focus:outline-none focus:ring-2 focus:ring-amerinode-blue-500 focus:ring-offset-2 sm:w-auto">Add user</button>
+                    </div>
+                  </div>
+                  <!--<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                    <h5 class="m-0">Users</h5>
+                    <span class="p-input-icon-left">
+                      <i class="pi pi-search" />
+                      <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+                    </span>
+                  </div>-->
+                </template>
+                <template #empty>
+                  No users found.
+                </template>
+                <template #loading>
+                  Loading users data. Please wait.
+                </template>
+                <Column selectionMode="multiple" style="min-width: 3rem"></Column>
+                <Column field="name" header="Name" sortable style="min-width: 14rem">
+                  <template #body="{data}">
+                    {{data.name}}
+                  </template>
+                  <template #filter="{filterModel}">
+                    <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
+                  </template>
+                </Column>
+                <Column field="username" header="Username" sortable style="min-width: 14rem">
+                  <template #body="{data}">
+                    {{data.username}}
+                  </template>
+                  <template #filter="{filterModel}">
+                    <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by username"/>
+                  </template>
+                </Column>
+                <Column field="email" header="Email" sortable style="min-width: 14rem">
+                  <template #body="{data}">
+                    {{data.email}}
+                  </template>
+                  <template #filter="{filterModel}">
+                    <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by email"/>
+                  </template>
+                </Column>
+              </DataTable>
+              <!--<table class="min-w-full divide-y divide-gray-300">
                 <thead class="bg-gray-50">
                 <tr>
                   <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6">Name</th>
@@ -40,13 +96,13 @@
                   </td>
                 </tr>
                 </tbody>
-              </table>
+              </table>-->
             </div>
           </div>
         </div>
       </div>
     </div>
-    <DataTable :value="users" :paginator="true" :rows="5"
+    <!--<DataTable :value="users" :paginator="true" :rows="5"
                dataKey="id" :rowHover="true" v-model:selection="selectedUsers" v-model:filters="filters" filterDisplay="menu" :loading="loading"
                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[5,10,25,50]"
                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -62,13 +118,13 @@
             <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-amerinode-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amerinode-blue-700 focus:outline-none focus:ring-2 focus:ring-amerinode-blue-500 focus:ring-offset-2 sm:w-auto">Add user</button>
           </div>
         </div>
-        <!--<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+        <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
           <h5 class="m-0">Users</h5>
           <span class="p-input-icon-left">
             <i class="pi pi-search" />
             <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
           </span>
-        </div>-->
+        </div>
       </template>
       <template #empty>
         No users found.
@@ -101,7 +157,7 @@
           <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by email"/>
         </template>
       </Column>
-    </DataTable>
+    </DataTable>-->
   </div>
 </template>
 
@@ -124,7 +180,7 @@ let filters = ref({
 })
 
 onMounted(() => {
-  userService.users().then(x => {
+  userService.list().then(x => {
     users.value = x.data
   }).catch(err => {
 

@@ -4,7 +4,7 @@
     <div class="md:pl-64 flex flex-col flex-1">
       <!-- navbar with search field-->
       <NavBar :user-navigation="userNavigation" :sidebar-is-open="sidebarOpen" @sideBarOpen="changeSideBar" />
-      <router-view />
+      <router-view :key="$route.fullPath" />
     </div>
   </div>
 </template>
