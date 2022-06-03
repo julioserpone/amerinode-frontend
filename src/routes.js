@@ -78,21 +78,29 @@ const routes = [
         }
       },
       {
-        path: ':userId(\\d+)',
-        name: 'UserShow',
-        component: () => import('@/views/Users/UserShow.vue'),
-        meta: {
-          page: 'UsersPage'
-        }
-      },
-      {
         path: 'create',
         name: 'UserCreate',
         component: () => import('@/views/Users/UserCreate.vue'),
         meta: {
           page: 'UsersPage'
         }
-      }
+      },
+      /*{
+        path: 'edit/:userId(\\d+)',
+        name: 'UserEdit',
+        component: () => import('@/views/Users/UserEdit.vue'),
+        meta: {
+          page: 'UsersPage'
+        }
+      },
+      {
+        path: 'show/:userId(\\d+)',
+        name: 'UserShow',
+        component: () => import('@/views/Users/UserShow.vue'),
+        meta: {
+          page: 'UsersPage'
+        }
+      }*/
     ]
   },
   {
