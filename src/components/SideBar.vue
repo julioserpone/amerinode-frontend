@@ -18,7 +18,7 @@
                 </div>
               </TransitionChild>
               <div class="flex-shrink-0 flex items-center px-4">
-                <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg" alt="Workflow" />
+                <img class="h-10 w-auto" src="../img/quantum.svg" alt="quantum-amerinode" />
               </div>
               <div class="mt-5 flex-1 h-0 overflow-y-auto">
                 <nav class="px-2 space-y-1">
@@ -46,9 +46,9 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
       <!-- Sidebar component, swap this element with another sidebar if you like -->
-      <div class="flex flex-col flex-grow pt-5 border-gray-200 bg-white overflow-y-auto">
+      <div class="flex flex-col flex-grow pt-3.5 border-gray-200 bg-white overflow-y-auto">
         <div class="flex items-center flex-shrink-0 px-4">
-          <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg" alt="Workflow" />
+          <img class="h-10 w-auto" src="../img/quantum.svg" alt="quantum-amerinode" />
         </div>
         <div class="mt-5 flex-1 flex flex-col">
           <nav class="flex-1 px-2 pb-4 space-y-1">

@@ -15,11 +15,14 @@
                   <div class="sm:flex sm:items-center">
                     <div class="sm:flex-auto">
                       <h1 class="text-xl font-semibold text-gray-900">Users</h1>
-                      <p class="mt-2 text-sm font-normal text-gray-700">A list of all the users in your account including their name, title, email and role.</p>
+                      <p class="mt-2 text-sm font-normal text-gray-700">A list of all the users including their roles and permissions.</p>
                     </div>
-                    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+                    <div class="mt-4 sm:mt-0 sm:ml-16 inline-flex items-center sm:flex-none">
                       <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
-                      <button type="button" class=" ml-4 inline-flex items-center justify-center rounded-md border border-transparent bg-amerinode-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amerinode-blue-700 focus:outline-none focus:ring-2 focus:ring-amerinode-blue-500 focus:ring-offset-2 sm:w-auto">Add user</button>
+                      <router-link to="/users/create" class="ml-4 inline-flex items-center justify-center rounded-md border border-transparent bg-amerinode-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amerinode-blue-700 focus:outline-none focus:ring-2 focus:ring-amerinode-blue-500 focus:ring-offset-2 sm:w-auto">
+                        <PlusIcon class="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+                        Add user
+                      </router-link>
                     </div>
                   </div>
                 </template>
@@ -29,7 +32,7 @@
                 <template #loading>
                   Loading users data. Please wait.
                 </template>
-                <Column selectionMode="multiple" style="min-width: 3rem"></Column>
+                <Column selectionMode="multiple" style="min-width: 1rem"></Column>
                 <Column field="name" header="Name" sortable style="min-width: 14rem">
                   <template #body="{data}">
                     {{data.name}}
@@ -54,6 +57,24 @@
                     <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by email"/>
                   </template>
                 </Column>
+                <Column :exportable="false">
+                  <template #body="slotProps">
+                    <div class="ml-4 flex items-center md:ml-6">
+                      <button type="button" @click="editUser(slotProps.data)" class="bg-white rounded-full p-1 mr-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amerinode-blue-500">
+                        <EyeIcon class="h-6 w-6" aria-hidden="true" />
+                        <span class="sr-only">edit user</span>
+                      </button>
+                      <button type="button" @click="editUser(slotProps.data)" class="bg-white rounded-full p-1 mr-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amerinode-blue-500">
+                        <PencilIcon class="h-6 w-6" aria-hidden="true" />
+                        <span class="sr-only">edit user</span>
+                      </button>
+                      <button type="button" @click="confirmDeleteUser(slotProps.data)" class="bg-white rounded-full p-1 mr-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amerinode-blue-500">
+                        <TrashIcon class="h-6 w-6" aria-hidden="true" />
+                        <span class="sr-only">delete user</span>
+                      </button>
+                    </div>
+                  </template>
+                </Column>
               </DataTable>
             </div>
           </div>
@@ -71,6 +92,7 @@ import Column from 'primevue/column';
 import {FilterMatchMode,FilterOperator} from 'primevue/api';
 import InputText from 'primevue/inputtext';
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
+import { PlusIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/vue/outline'
 
 let users = ref()
 let loading = ref(true)
@@ -98,12 +120,11 @@ onMounted(() => {
   })
 })
 
-const people = [
-  { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-  { name: 'Courtney Henry', title: 'Designer', email: 'courtney.henry@example.com', role: 'Admin' },
-  { name: 'Tom Cook', title: 'Director, Product Development', email: 'tom.cook@example.com', role: 'Member' },
-  { name: 'Whitney Francis', title: 'Copywriter', email: 'whitney.francis@example.com', role: 'Admin' },
-  { name: 'Leonard Krasner', title: 'Senior Designer', email: 'leonard.krasner@example.com', role: 'Owner' },
-  { name: 'Floyd Miles', title: 'Principal Designer', email: 'floy.dmiles@example.com', role: 'Member' },
-]
+function editUser(user) {
+  console.log(user)
+}
+
+function confirmDeleteUser(user) {
+  console.log(user)
+}
 </script>
