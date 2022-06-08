@@ -15,7 +15,8 @@
             </div>
             <div v-else class="flex items-center">
               <ChevronRightIcon class="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
-              <router-link :to="{ name: item.pathName }" :aria-current="item.current ? 'page' : undefined" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">{{ item.description }}</router-link>
+              <router-link v-if="item.isLink" :to="{ name: item.pathName }" :aria-current="item.current ? 'page' : undefined" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">{{ item.description }}</router-link>
+              <span v-else class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">{{ item.description }}</span>
             </div>
           </li>
         </ol>

@@ -5,7 +5,7 @@
         <div class="flex-grow mx-auto max-w-7xl w-full flex flex-col px-4 sm:px-6 lg:px-8">
           <div class="flex-shrink-0 pt-10 sm:pt-16">
             <a href="/" class="inline-flex">
-              <span class="sr-only">Workflow</span>
+              <span class="sr-only">amerinode</span>
               <img class="h-32 w-auto" src="../img/amerinode-logo-slogan.png" alt="" />
             </a>
           </div>
@@ -14,7 +14,7 @@
             <h1 class="mt-2 text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">Page not found</h1>
             <p class="mt-2 text-base text-gray-500">Sorry, we couldn’t find the page you’re looking for.</p>
             <div class="mt-6">
-              <a href="#" class="text-base font-medium text-blue-600 hover:text-blue-500">Go back home<span aria-hidden="true"> &rarr;</span></a>
+              <router-link to="/" class="text-base font-medium text-blue-600 hover:text-blue-500">Go back home<span aria-hidden="true"> &rarr;</span></router-link>
             </div>
           </div>
         </div>

@@ -1,10 +1,13 @@
 <template>
   <main>
-    <div class="py-6">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        <h1 class="text-2xl font-semibold text-gray-900">Users</h1>
+    <div class="px-4 py-4 sm:px-6 lg:px-8">
+      <div class="mx-auto">
+        <breadcrumbs :trace-route="trace" />
+        <div class="pb-5 border-b border-gray-200">
+          <h1 class="text-2xl font-semibold text-gray-900 pt-4">Users</h1>
+        </div>
       </div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+      <div class="mx-auto ">
         <!-- Replace with your content -->
         <div class="py-4">
           <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -232,3 +235,11 @@
     </div>
   </main>
 </template>
+<script setup>
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
+let trace = [
+  { description: 'Home', pathName: 'HomePage', isLink: true, current: false },
+  { description: 'Users', pathName: 'UserList', isLink: true, current: false },
+  { description: 'Edit', pathName: 'UserEdit', isLink: false, current: true }
+]
+</script>
