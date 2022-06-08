@@ -31,7 +31,6 @@ const routes = [
       component: () => import('@/views/HomePage.vue'),
       name: 'DashboardPage',
       meta: {
-        requiresAuth: true,
         page: 'DashboardPage'
       }
     }]
@@ -45,7 +44,6 @@ const routes = [
       component: About,
       name: 'ParametricPage',
       meta: {
-        requiresAuth: true,
         page: 'ParametricPage'
       },
     }]
@@ -59,8 +57,20 @@ const routes = [
       component: About,
       name: 'TicketsPackagePage',
       meta: {
-        requiresAuth: true,
         page: 'TicketsPackagePage'
+      },
+    }]
+  },
+  {
+    path: '/reports',
+    name: 'Reports',
+    component: LayoutAdmin,
+    children: [{
+      path: '',
+      component: About,
+      name: 'ReportsPage',
+      meta: {
+        page: 'ReportsPage'
       },
     }]
   },
@@ -110,10 +120,7 @@ const routes = [
     children: [{
       path: '',
       name: 'LoginPage',
-      component: () => import('@/views/Auth/LoginPage.vue'),
-      meta: {
-        requiresAuth: false
-      },
+      component: () => import('@/views/Auth/LoginPage.vue')
     }],
   },
   {
@@ -123,19 +130,13 @@ const routes = [
     children: [{
       path: '',
       name: 'AboutPage',
-      component: About,
-      meta: {
-        requiresAuth: true
-      },
+      component: About
     }],
   },
   {
     path: '/:path(.*)',
     name: 'NotFound',
-    component: () => import('@/views/NotFoundPage.vue'),
-    meta: {
-      requiresAuth: false
-    },
+    component: () => import('@/views/NotFoundPage.vue')
   },
 ]
 

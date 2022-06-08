@@ -84,7 +84,6 @@
   const emit = defineEmits(['sideBarOpen'])
 
   const closeSideBar = () => {
-    //console.log('cerrar sidebar')
     emit('sideBarOpen', false)
   }
 </script>
