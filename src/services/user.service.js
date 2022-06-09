@@ -7,6 +7,9 @@ export default {
     get (id) {
         return httpService.get(`users/${id}`)
     },
+    edit (id) {
+        return httpService.get(`users/${id}/edit`)
+    },
     delete (id) {
         return httpService.delete(`users/${id}`)
     },

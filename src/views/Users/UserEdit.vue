@@ -8,7 +8,7 @@
           <h1 class="text-2xl font-semibold text-gray-900 pt-4">{{ names }}</h1>
         </div>
       </div>
-      <div class="mx-auto ">
+      <div class="mx-auto">
         <UserForm :user="userData" @save="saveData"/>
       </div>
     </div>
@@ -20,10 +20,10 @@ import LoadingContent from '@/components/LoadingContent.vue'
 import UserForm from '@/views/Users/UserForm.vue'
 import userService from "@/services/user.service";
 import { onMounted, ref } from "vue";
-import { useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 const route = useRoute()
-
+const router = useRouter()
 let userData = ref({})
 let loading = ref(true)
 let userId = ref()
@@ -37,7 +37,7 @@ let trace = [
 
 onMounted(() => {
   userId.value = route.params.userId
-  userService.get(userId.value).then(x => {
+  userService.edit(userId.value).then(x => {
     userData.value = x.data
     names.value = x.data.name
   }).catch(err => {
@@ -51,5 +51,6 @@ onMounted(() => {
 
 const saveData = () => {
   console.log(userData.value)
+  router.push({ name: "UserList" })
 }
 </script>
