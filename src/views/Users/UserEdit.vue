@@ -18,9 +18,9 @@
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
 import UserForm from '@/views/Users/UserForm.vue'
-import userService from "@/services/user.service";
 import { onMounted, ref } from "vue";
 import { useRouter, useRoute } from 'vue-router'
+import userService from "@/services/user.service";
 
 const route = useRoute()
 const router = useRouter()
