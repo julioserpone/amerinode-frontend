@@ -9,48 +9,70 @@
         </div>
       </div>
       <div class="mx-auto">
-        <UserForm :user="userData" @save="saveData"/>
+        <UserForm :user="userData" :user-id="userId" :editable="editable" @isLoading="statusLoading" @save="saveData"/>
       </div>
     </div>
   </main>
 </template>
 <script setup>
+import { onBeforeMount, ref } from "vue";
+import { useRouter, useRoute } from 'vue-router'
+import userService from "@/services/user.service";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
 import UserForm from '@/views/Users/UserForm.vue'
-import { onMounted, ref } from "vue";
-import { useRouter, useRoute } from 'vue-router'
-import userService from "@/services/user.service";
 
 const route = useRoute()
 const router = useRouter()
-let userData = ref({})
+const editable = ref(true)
+let userData = ref({
+  "name": "",
+  "username": "",
+  "email": "",
+  "title": "",
+  "work_phone": "",
+  "mobile_phone": "",
+  "roles": [
+    {
+      "name": "",
+      "guard_name": "",
+      "description": "",
+      "disabled": 0
+    }
+  ],
+  "permissions": []
+})
+
 let loading = ref(true)
-let userId = ref()
+let userId = ref('')
 let names = ref(String)
+
 //for breadcrumbs
 let trace = [
   { description: 'Home', pathName: 'HomePage', isLink: true, current: false },
   { description: 'Users', pathName: 'UserList', isLink: true, current: false },
   { description: 'Edit', pathName: 'UserEdit', isLink: false, current: true }
 ]
+onBeforeMount( () => {
 
-onMounted(() => {
   userId.value = route.params.userId
+  //query to User
   userService.edit(userId.value).then(x => {
     userData.value = x.data
     names.value = x.data.name
   }).catch(err => {
 
   }).finally(() => {
-    setTimeout(() => {
-      loading.value = false
-    }, 500)
+
   })
 })
 
-const saveData = () => {
-  console.log(userData.value)
-  router.push({ name: "UserList" })
+const saveData = (event) => {
+  console.log(event)
+ // console.log(userData.value)
+  //router.push({ name: "UserList" })
+}
+const statusLoading = (data) => {
+  loading.value = data
 }
 </script>
