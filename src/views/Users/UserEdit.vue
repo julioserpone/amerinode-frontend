@@ -17,6 +17,7 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { useRouter, useRoute } from 'vue-router'
+import { notify } from "notiwind";
 import userService from "@/services/user.service";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
@@ -32,6 +33,8 @@ let userData = ref({
   "title": "",
   "work_phone": "",
   "mobile_phone": "",
+  "password": "",
+  "status": "",
   "roles": [
     {
       "name": "",
@@ -69,8 +72,22 @@ onBeforeMount( () => {
 
 const saveData = (event) => {
   console.log(event)
- // console.log(userData.value)
-  //router.push({ name: "UserList" })
+  let data = {
+    'user': event.user,
+    'role': event.role
+  }
+  userService.save(userId.value, data).then(x => {
+    notify({
+      group: "top",
+      title: "Update",
+      text: x.data,
+      type: "success"
+    }, 5000)
+  }).catch(err => {
+    console.log(err.message)
+  }).finally(() => {
+    router.push({ name: "UserList" })
+  })
 }
 const statusLoading = (data) => {
   loading.value = data

@@ -15,7 +15,7 @@ export default {
     },
     save (id, params) {
         if(id) {
-            return  httpService.put(`users/${id}`, params)
+            return httpService.put(`users/${id}`, params)
         }
         return httpService.post(`users`, params)
     }

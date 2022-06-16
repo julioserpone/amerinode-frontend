@@ -31,6 +31,8 @@ let userData = ref({
   "title": "",
   "work_phone": "",
   "mobile_phone": "",
+  "password": "",
+  "status": "",
   "roles": [
     {
       "name": "",

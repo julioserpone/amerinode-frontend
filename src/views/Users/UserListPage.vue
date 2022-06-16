@@ -57,6 +57,22 @@
                     <InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by email"/>
                   </template>
                 </Column>
+                <Column field="status" header="Status" sortable :filterMenuStyle="{'width':'14rem'}" style="min-width:12rem">
+                  <template #body="{data}">
+                    <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium uppercase" :class="data.status === 'active' ? 'bg-green-100 text-green-800': 'bg-red-100 text-red-800'">{{data.status}}</span>
+                  </template>
+                  <template #filter="{filterModel}">
+                    <Dropdown v-model="filterModel.value" :options="statuses" placeholder="Any" class="p-column-filter" :showClear="true">
+                      <template #value="slotProps">
+                        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium uppercase" :class="slotProps.value === 'active' ? 'bg-green-100 text-green-800': 'bg-red-100 text-red-800'" v-if="slotProps.value">{{slotProps.value}}</span>
+                        <span v-else>{{slotProps.placeholder}}</span>
+                      </template>
+                      <template #option="slotProps">
+                        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium uppercase" :class="slotProps.option === 'active' ? 'bg-green-100 text-green-800': 'bg-red-100 text-red-800'">{{slotProps.option}}</span>
+                      </template>
+                    </Dropdown>
+                  </template>
+                </Column>
                 <Column :exportable="false">
                   <template #body="slotProps">
                     <div class="ml-4 flex items-center md:ml-6">
@@ -92,16 +108,20 @@
 </template>
 
 <script setup>
-import userService from "../../services/user.service.js"
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
+import { useRouter } from 'vue-router'
+import { notify } from "notiwind";
 import DataTable from 'primevue/datatable';
+import Dropdown from 'primevue/dropdown';
 import Column from 'primevue/column';
-import {FilterMatchMode,FilterOperator} from 'primevue/api';
 import InputText from 'primevue/inputtext';
+import { FilterMatchMode, FilterOperator } from 'primevue/api';
+import { PlusIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/vue/outline'
+import userService from "../../services/user.service.js"
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import DialogConfirm from '@/components/DialogConfirm.vue'
-import { PlusIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/vue/outline'
 
+const router = useRouter()
 let users = ref()
 let user = ref({})
 let loading = ref(true)
@@ -112,14 +132,22 @@ let trace = [
   { description: 'Home', pathName: 'HomePage', isLink: true, current: false },
   { description: 'Users', pathName: 'UserList', isLink: true, current: true }
 ]
+let statuses = ref([
+  'active', 'inactive'
+]);
 let filters = ref({
   'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
   'name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
   'username': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
   'email': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
+  'status': {value: null, matchMode: FilterMatchMode.EQUALS},
 })
 
 onMounted(() => {
+  loadUsers()
+})
+
+function loadUsers() {
   userService.list().then(x => {
     users.value = x.data
   }).catch(err => {
@@ -129,7 +157,7 @@ onMounted(() => {
       loading.value = false
     }, 500)
   })
-})
+}
 
 function confirmDeleteUser(data) {
   user.value = data
@@ -138,8 +166,21 @@ function confirmDeleteUser(data) {
 }
 
 const deleteUser = () => {
-  console.log('user deleted: ',user.value)
+  //console.log('user deleted: ',user.value)
   closeDeleteUserDialog()
+  userService.delete(user.value.id).then(x => {
+    notify({
+      group: "top",
+      title: "Delete",
+      text: x.data,
+      type: "success"
+    }, 5000)
+    loadUsers()
+  }).catch(err => {
+    console.log(err.message)
+  }).finally(() => {
+
+  })
 }
 const closeDeleteUserDialog = () => {
   openDialogConfirm.value = false
