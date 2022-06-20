@@ -71,10 +71,11 @@ onBeforeMount( () => {
 })
 
 const saveData = (event) => {
-  console.log(event)
+
   let data = {
     'user': event.user,
-    'role': event.role
+    'role': event.role,
+    'status': event.status
   }
   userService.save(userId.value, data).then(x => {
     notify({
@@ -83,10 +84,26 @@ const saveData = (event) => {
       text: x.data,
       type: "success"
     }, 5000)
-  }).catch(err => {
-    console.log(err.message)
-  }).finally(() => {
     router.push({ name: "UserList" })
+  }).catch(err => {
+    console.log(err)
+    //Unprocessable content
+    if (err.code === "ERR_BAD_REQUEST") {
+      notify({
+        group: "top",
+        title: "Error",
+        text: err.response.data.message,
+        type: "error"
+      }, 5000)
+    } else {
+      notify({
+        group: "top",
+        title: "Error",
+        text: err.message,
+        type: "error"
+      }, 5000)
+    }
+  }).finally(() => {
   })
 }
 const statusLoading = (data) => {
