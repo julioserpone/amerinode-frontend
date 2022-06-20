@@ -62,6 +62,19 @@ const routes = [
     }]
   },
   {
+    path: '/tickets',
+    name: 'Tickets',
+    component: LayoutAdmin,
+    children: [{
+      path: '',
+      component: () => import('@/views/TicketsPage.vue'),
+      name: 'TicketsPage',
+      meta: {
+        page: 'TicketsPage'
+      },
+    }]
+  },
+  {
     path: '/reports',
     name: 'Reports',
     component: LayoutAdmin,
