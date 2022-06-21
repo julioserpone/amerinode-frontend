@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="mx-auto">
-        <UserForm :user="userData" :user-id="userId" :editable="editable" @isLoading="statusLoading" @save="saveData" />
+        <UserForm :user="userData" :user-id="userId" :assign-list="assignValue" @isLoading="statusLoading" @save="saveData" />
       </div>
     </div>
   </main>
@@ -19,12 +19,12 @@ import { ref } from "vue";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
 import UserForm from '@/views/Users/UserForm.vue'
-import userService from "@/services/user.service";
-import {notify} from "notiwind";
-import {useRouter} from "vue-router";
+import userService from "@/services/user.service"
+import {notify} from "notiwind"
+import {useRouter} from "vue-router"
 
 const router = useRouter()
-const editable = ref(false)
+const assignValue = ref(false)
 let loading = ref(true)
 let userId = ref('')
 let userData = ref({
@@ -35,6 +35,7 @@ let userData = ref({
   "work_phone": "",
   "mobile_phone": "",
   "password": "",
+  "password_confirmation": "",
   "status": "",
   "roles": [
     {

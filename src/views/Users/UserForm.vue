@@ -20,6 +20,7 @@
                         v-model="user.title"
                         label="Title"
                         type="text"
+                        :is-disabled="!grantEditValues"
                     />
                   </div>
 
@@ -30,6 +31,7 @@
                         v-model="user.name"
                         label="Name"
                         type="text"
+                        :is-disabled="!grantEditValues"
                     />
                   </div>
 
@@ -40,6 +42,7 @@
                         v-model="user.username"
                         label="Username"
                         type="text"
+                        :is-disabled="!grantEditValues"
                     />
                   </div>
 
@@ -50,6 +53,7 @@
                         v-model="user.email"
                         label="Email address"
                         type="text"
+                        :is-disabled="!grantEditValues"
                     />
                   </div>
 
@@ -60,6 +64,7 @@
                         v-model="user.mobile_phone"
                         label="Mobile Phone"
                         type="text"
+                        :is-disabled="!grantEditValues"
                     />
                   </div>
 
@@ -70,14 +75,16 @@
                         v-model="user.work_phone"
                         label="Work Phone"
                         type="text"
+                        :is-disabled="!grantEditValues"
                     />
                   </div>
 
                   <div class="col-span-6 sm:col-span-3 lg:col-span-3">
-                    <Listbox as="div" v-model="selectedStatus">
+                    <Listbox as="div" v-model="selectedStatus" :disabled="!grantEditValues">
                       <ListboxLabel class="block text-sm font-medium text-gray-700"> Status </ListboxLabel>
                       <div class="relative mt-1">
-                        <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-amerinode-blue-500 focus:border-amerinode-blue-500 sm:text-sm">
+                        <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-amerinode-blue-500 focus:border-amerinode-blue-500 sm:text-sm"
+                                       :class="[ !grantEditValues ? 'disabled:opacity-75':'']">
                           <span class="block truncate">{{ selectedStatus.name }}</span>
                           <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                             <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -129,8 +136,8 @@
       <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
           <div class="px-4 sm:px-0">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Roles</h3>
-            <p class="mt-1 text-sm text-gray-600">Assignment of the role that the user has.</p>
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Security</h3>
+            <p class="mt-1 text-sm text-gray-600">Assignment of roles and access password.</p>
           </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
@@ -138,11 +145,33 @@
             <div class="shadow sm:rounded-md">
               <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
+                  <div v-show="grantEditValues" class="col-span-6 sm:col-span-3 lg:col-span-3">
+                    <base-input
+                        :id="'password'"
+                        :autocomplete="'password'"
+                        v-model="user.password"
+                        label="Password"
+                        type="password"
+                        :is-disabled="!grantEditValues"
+                    />
+                  </div>
+
+                  <div v-show="grantEditValues" class="col-span-6 sm:col-span-3 lg:col-span-3">
+                    <base-input
+                        :id="'password-confirmation '"
+                        :autocomplete="'password-confirmation '"
+                        v-model="user.password_confirmation "
+                        label="Password confirmation"
+                        type="password"
+                        :is-disabled="!grantEditValues"
+                    />
+                  </div>
                   <div class="col-span-6 sm:col-span-3">
-                    <Listbox as="div" v-model="selectedRole">
+                    <Listbox as="div" v-model="selectedRole" :disabled="!grantEditValues">
                       <ListboxLabel class="block text-sm font-medium text-gray-700"> Assigned role </ListboxLabel>
                       <div class="relative mt-1">
-                        <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-amerinode-blue-500 focus:border-amerinode-blue-500 sm:text-sm">
+                        <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-amerinode-blue-500 focus:border-amerinode-blue-500 sm:text-sm"
+                                       :class="[ !grantEditValues ? 'disabled:opacity-75':'']">
                           <span class="block truncate">{{ selectedRole.name }}</span>
                           <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                             <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -210,7 +239,7 @@ onBeforeMount( () => {
 
   roleService.list().then(x => {
     roles.value = x.data
-    if (data.editable.value) {
+    if (data.assignList.value) {
       //Assign the same type of object to the list (for the cases in which it is an already registered user)
       for (const [index, item] of Object.entries(roles.value)) {
         if (item.id === data.user.value.roles[0].id) {
@@ -243,7 +272,7 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
-  editable: {
+  assignList: {
     type: Boolean,
     default: false
   },
