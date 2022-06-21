@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="mx-auto">
-        <UserForm :user="userData" :user-id="userId" :editable="editable" @isLoading="statusLoading" @save="saveData"/>
+        <UserForm :user="userData" :user-id="userId" :assign-list="assignValue" @isLoading="statusLoading" @save="saveData"/>
       </div>
     </div>
   </main>
@@ -25,7 +25,8 @@ import UserForm from '@/views/Users/UserForm.vue'
 
 const route = useRoute()
 const router = useRouter()
-const editable = ref(true)
+const assignValue = ref(true)
+
 let userData = ref({
   "name": "",
   "username": "",
@@ -34,6 +35,7 @@ let userData = ref({
   "work_phone": "",
   "mobile_phone": "",
   "password": "",
+  "password_confirmation": "",
   "status": "",
   "roles": [
     {
@@ -86,7 +88,7 @@ const saveData = (event) => {
     }, 5000)
     router.push({ name: "UserList" })
   }).catch(err => {
-    console.log(err)
+    //console.log(err)
     //Unprocessable content
     if (err.code === "ERR_BAD_REQUEST") {
       notify({
