@@ -15,7 +15,7 @@
                   <div class="sm:flex sm:items-center">
                     <div class="sm:flex-auto">
                       <h1 class="text-xl font-semibold text-gray-900">Users</h1>
-                      <p class="mt-2 text-sm font-normal text-gray-700">A list of all the users including their roles and permissions.</p>
+                      <p class="mt-2 text-sm font-normal text-gray-700">A list of all the users including their roles.</p>
                     </div>
                     <div class="mt-4 sm:mt-0 sm:ml-16 inline-flex items-center sm:flex-none">
                       <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
@@ -166,7 +166,7 @@ function loadUsers() {
 
 function confirmDeleteUser(data) {
   user.value = data
-  messageDeleteUser.value = "Are you sure you want to delete the user "+user.value.name+"?"
+  messageDeleteUser.value = "Are you sure you want to inactive the user "+user.value.name+"?"
   openDialogConfirm.value = true
 }
 
