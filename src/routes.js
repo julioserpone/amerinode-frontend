@@ -127,6 +127,45 @@ const routes = [
     ]
   },
   {
+    path: '/roles',
+    component: LayoutAdmin,
+    name: 'Role',
+    children: [
+      {
+        path: '',
+        name: 'RoleList',
+        component: () => import('@/views/Roles/RoleListPage.vue'),
+        meta: {
+          page: 'RolesPage'
+        }
+      },
+      {
+        path: 'create',
+        name: 'RoleCreate',
+        component: () => import('@/views/Roles/RoleCreate.vue'),
+        meta: {
+          page: 'RolesPage'
+        }
+      },
+      {
+        path: ':roleId(\\d+)',
+        name: 'RoleShow',
+        component: () => import('@/views/Roles/RoleShow.vue'),
+        meta: {
+          page: 'RolesPage'
+        }
+      },
+      {
+        path: ':roleId(\\d+)/edit',
+        name: 'RoleEdit',
+        component: () => import('@/views/Roles/RoleEdit.vue'),
+        meta: {
+          page: 'RolesPage'
+        }
+      }
+    ]
+  },
+  {
     path: '/login',
     name: 'Login',
     component: LayoutAuth,
