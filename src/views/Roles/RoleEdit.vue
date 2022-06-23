@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="mx-auto">
-        <RoleForm :role="roleData" :role-id="roleId" :assign-list="assignValue" @isLoading="statusLoading" @save="saveData"/>
+        <RoleForm :role="roleData" :role-id="roleId" :assign-list="canAssign" @isLoading="statusLoading" @save="saveData"/>
       </div>
     </div>
   </main>
@@ -25,7 +25,7 @@ import RoleForm from '@/views/Roles/RoleForm.vue'
 
 const route = useRoute()
 const router = useRouter()
-const assignValue = ref(true)
+const canAssign = ref(true)
 
 let roleData = ref({
   "name": "",
@@ -69,7 +69,8 @@ const saveData = (event) => {
 
   let data = {
     'role': event.role,
-    'status': event.status
+    'status': event.status,
+    'permissions': event.permissions
   }
   roleService.save(roleId.value, data).then(x => {
     notify({
@@ -80,22 +81,13 @@ const saveData = (event) => {
     }, 5000)
     router.push({ name: "RoleList" })
   }).catch(err => {
-    //Unprocessable content
-    if (err.code === "ERR_BAD_REQUEST") {
-      notify({
-        group: "top",
-        title: "Error",
-        text: err.response.data.message,
-        type: "error"
-      }, 5000)
-    } else {
-      notify({
-        group: "top",
-        title: "Error",
-        text: err.message,
-        type: "error"
-      }, 5000)
-    }
+    let message = (err.code === "ERR_BAD_REQUEST") ? err.response.data.message : err.message;
+    notify({
+      group: "top",
+      title: "Error",
+      text: message,
+      type: "error"
+    }, 5000)
   }).finally(() => {
   })
 }
