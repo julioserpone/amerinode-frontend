@@ -89,7 +89,7 @@
                         <PencilIcon class="h-6 w-6" aria-hidden="true" />
                         <span class="sr-only">edit</span>
                       </router-link>
-                      <button type="button" @click="confirmDeleteUser(slotProps.data)" class="bg-white rounded-full p-1 mr-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amerinode-blue-500">
+                      <button v-show="slotProps.data.status !== 'inactive'" type="button" @click="confirmDeleteUser(slotProps.data)" class="bg-white rounded-full p-1 mr-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amerinode-blue-500">
                         <TrashIcon class="h-6 w-6" aria-hidden="true" />
                         <span class="sr-only">delete</span>
                       </button>
@@ -99,7 +99,7 @@
               </DataTable>
               <dialog-confirm
                   :showDialog="openDialogConfirm"
-                  :title="'Delete user'"
+                  :title="'Inactive user'"
                   :message="messageDeleteUser"
                   @executeAction="deleteUser"
                   @closeDialog="closeDeleteUserDialog"
