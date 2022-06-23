@@ -68,7 +68,7 @@ const saveData = (event) => {
     }, 5000)
     router.push({ name: "UserList" })
   }).catch(err => {
-    console.log(err)
+    //console.log(err)
     //Unprocessable content
     if (err.code === "ERR_BAD_REQUEST") {
       notify({
