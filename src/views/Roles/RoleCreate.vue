@@ -19,7 +19,7 @@ import { ref } from "vue";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
 import RoleForm from '@/views/Roles/RoleForm.vue'
-import roleService from "@/services/rol.service"
+import roleService from "@/services/role.service"
 import {notify} from "notiwind"
 import {useRouter} from "vue-router"
 

@@ -17,7 +17,7 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { useRouter, useRoute } from 'vue-router'
-import roleService from "@/services/rol.service";
+import roleService from "@/services/role.service";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
 import RoleForm from '@/views/Roles/RoleForm.vue'

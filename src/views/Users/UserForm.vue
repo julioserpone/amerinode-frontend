@@ -216,7 +216,7 @@
 </template>
 <script setup>
 import {ref, defineProps, defineEmits, onBeforeMount, toRefs} from "vue";
-import roleService from "../../services/rol.service.js"
+import roleService from "../../services/role.service.js"
 import {
   Listbox,
   ListboxLabel,
