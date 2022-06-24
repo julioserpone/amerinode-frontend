@@ -166,6 +166,45 @@ const routes = [
     ]
   },
   {
+    path: '/permissions',
+    component: LayoutAdmin,
+    name: 'Permission',
+    children: [
+      {
+        path: '',
+        name: 'PermissionList',
+        component: () => import('@/views/Permissions/PermissionListPage.vue'),
+        meta: {
+          page: 'PermissionsPage'
+        }
+      },
+      {
+        path: 'create',
+        name: 'PermissionCreate',
+        component: () => import('@/views/Permission/PermissionCreate.vue'),
+        meta: {
+          page: 'PermissionsPage'
+        }
+      },
+      {
+        path: ':permissionId(\\d+)',
+        name: 'PermissionShow',
+        component: () => import('@/views/Permissions/PermissionShow.vue'),
+        meta: {
+          page: 'PermissionsPage'
+        }
+      },
+      {
+        path: ':permissionId(\\d+)/edit',
+        name: 'PermissionEdit',
+        component: () => import('@/views/Permissions/PermissionEdit.vue'),
+        meta: {
+          page: 'PermissionsPage'
+        }
+      }
+    ]
+  },
+  {
     path: '/login',
     name: 'Login',
     component: LayoutAuth,
