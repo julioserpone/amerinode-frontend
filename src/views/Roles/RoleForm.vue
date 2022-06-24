@@ -112,7 +112,7 @@
             <div class="shadow sm:rounded-md">
               <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
-                  <div v-show="canEdit" class="col-span-6">
+                  <div class="col-span-6">
                     <DataTable :value="permissions" :paginator="true" :rows="10" :resizableColumns="true" columnResizeMode="fit"
                                dataKey="id" :rowHover="true" v-model:selection="selectedPermissions" v-model:filters="filters" filterDisplay="menu" :loading="loading"
                                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[5,10,25,50]"
