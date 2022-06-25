@@ -96,7 +96,7 @@
   </div>
 </template>
 <script setup>
-import {ref, defineProps, defineEmits, toRefs, onUpdated } from "vue";
+import {ref, defineProps, defineEmits, toRefs, onUpdated, onBeforeMount } from "vue";
 import {
   Listbox,
   ListboxLabel,
@@ -113,22 +113,19 @@ const statuses = ref([
   { id: 'active', name: 'Active' },
   { id: 'inactive', name: 'Inactive' }
 ])
-
-onUpdated( () => {
-
-  if (!loaded.value) {
-    if (data.assignList.value) {
-      //Assign status
-      statuses.value.forEach((element, index) => {
-        if (element.id === data.permission.value.status) {
-          selectedStatus.value = element
-        }
-      })
-    } else {
-      selectedStatus.value = statuses.value[0]
-    }
+onBeforeMount(() => {
+  if (!data.modeEdit.value) {
+    assignStatus()
     emit('isLoading', false)
-    loaded.value = true
+  }
+})
+onUpdated( () => {
+  if (data.modeEdit.value) {
+    if (!loaded.value) {
+      assignStatus()
+      emit('isLoading', false)
+      loaded.value = true
+    }
   }
 })
 
@@ -147,12 +144,28 @@ const props = defineProps({
   permissionId: {
     type: String,
     default: ''
+  },
+  modeEdit: {
+    type: Boolean,
+    default: true
   }
 })
 
 const emit = defineEmits(['save', 'isLoading'])
 const data = toRefs(props)
 
+function assignStatus() {
+  if (data.assignList.value) {
+    //Assign status
+    statuses.value.forEach((element, index) => {
+      if (element.id === data.permission.value.status) {
+        selectedStatus.value = element
+      }
+    })
+  } else {
+    selectedStatus.value = statuses.value[0]
+  }
+}
 const sendData = (event) => {
   event.preventDefault()
   emit('save', { permission: data.permission.value, status: selectedStatus.value } )
