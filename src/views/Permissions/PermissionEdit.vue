@@ -20,7 +20,7 @@
   </main>
 </template>
 <script setup>
-import {onBeforeMount, onBeforeUpdate, onMounted, ref} from "vue";
+import {onBeforeMount, ref} from "vue";
 import { useRouter, useRoute } from 'vue-router'
 import { notify } from "notiwind";
 import permissionService from "@/services/permission.service";
