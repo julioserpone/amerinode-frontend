@@ -41,7 +41,7 @@ const routes = [
     component: LayoutAdmin,
     children: [{
       path: '',
-      component: About,
+      component: () => import('@/views/Parametric/ParametricGrid.vue'),
       name: 'ParametricPage',
       meta: {
         page: 'ParametricPage'
