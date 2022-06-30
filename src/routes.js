@@ -39,14 +39,48 @@ const routes = [
     path: '/parametric',
     name: 'Parametric',
     component: LayoutAdmin,
-    children: [{
-      path: '',
-      component: () => import('@/views/Parametric/ParametricGrid.vue'),
-      name: 'ParametricPage',
-      meta: {
-        page: 'ParametricPage'
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/Parametric/ParametricGrid.vue'),
+        name: 'ParametricPage',
+        meta: {
+          page: 'ParametricPage'
+        },
       },
-    }]
+      {
+        path: 'technologies',
+        name: 'TechnologyList',
+        component: () => import('@/views/Parametric/Technologies/TechnologyListPage.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'technologies/create',
+        name: 'TechnologyCreate',
+        component: () => import('@/views/Parametric/Technologies/TechnologyCreate.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'technologies/:technologyId(\\d+)',
+        name: 'TechnologyShow',
+        component: () => import('@/views/Parametric/Technologies/TechnologyShow.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'technologies/:technologyId(\\d+)/edit',
+        name: 'TechnologyEdit',
+        component: () => import('@/views/Parametric/Technologies/TechnologyEdit.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      }
+    ]
   },
   {
     path: '/tickets-package',
