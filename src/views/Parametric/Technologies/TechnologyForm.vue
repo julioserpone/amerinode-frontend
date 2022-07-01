@@ -16,8 +16,8 @@
 
                   <div class="col-span-6 sm:col-span-5">
                     <base-input
-                        :id="'description'"
-                        :autocomplete="'description'"
+                        :id="'description-technology'"
+                        :autocomplete="'description-technology'"
                         v-model="technology.description"
                         label="Description"
                         type="text"
