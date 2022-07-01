@@ -78,6 +78,38 @@ const routes = [
         component: () => import('@/views/Parametric/Technologies/TechnologyEdit.vue'),
         meta: {
           page: 'ParametricPage'
+        },
+      },
+      {
+        path: 'companies',
+        name: 'CompanyList',
+        component: () => import('@/views/Parametric/Companies/CompanyListPage.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'companies/create',
+        name: 'CompanyCreate',
+        component: () => import('@/views/Parametric/Companies/CompanyCreate.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'companies/:companyId(\\d+)',
+        name: 'CompanyShow',
+        component: () => import('@/views/Parametric/Companies/CompanyShow.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'companies/:companyId(\\d+)/edit',
+        name: 'CompanyEdit',
+        component: () => import('@/views/Parametric/Companies/CompanyEdit.vue'),
+        meta: {
+          page: 'ParametricPage'
         }
       }
     ]
