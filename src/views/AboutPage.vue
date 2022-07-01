@@ -1,7 +1,3 @@
-<script setup>
-import ButtonRepo from '@/components/ButtonRepo.vue'
-</script>
-
 <template>
   <div class="bg-gray-50">
     <div
@@ -12,7 +8,7 @@ import ButtonRepo from '@/components/ButtonRepo.vue'
       >
         About Page
         <br />
-        <span class="text-blue-600">Vite + Vue 3 + Tailwind CSS</span>
+        <span class="text-blue-600">Example page</span>
       </h2>
       <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
         <div class="inline-flex rounded-md shadow">
@@ -22,7 +18,6 @@ import ButtonRepo from '@/components/ButtonRepo.vue'
             >Back Home</router-link
           >
         </div>
-        <ButtonRepo />
       </div>
     </div>
   </div>
