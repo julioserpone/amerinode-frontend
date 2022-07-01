@@ -61,7 +61,7 @@ const actions = [
   },
   {
     title: 'Companies',
-    href: '#',
+    href: 'parametric/companies',
     icon: OfficeBuildingIcon,
     description: 'The companies to which Amerinode provides its services',
   },
