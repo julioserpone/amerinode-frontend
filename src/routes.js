@@ -148,11 +148,11 @@ const routes = [
   },
   {
     path: '/tickets-package',
-    name: 'TicketsPackagePage',
+    name: 'TicketsPackage',
     component: LayoutAdmin,
     children: [{
       path: '',
-      component: About,
+      component: () => import('@/views/TicketsPackage/TicketsPackagePage.vue'),
       name: 'TicketsPackagePage',
       meta: {
         page: 'TicketsPackagePage'
@@ -165,10 +165,36 @@ const routes = [
     component: LayoutAdmin,
     children: [{
       path: '',
-      component: () => import('@/views/TicketsPage.vue'),
+      component: () => import('@/views/Tickets/TicketsPage.vue'),
       name: 'TicketsPage',
       meta: {
         page: 'TicketsPage'
+      },
+    }]
+  },
+  {
+    path: '/manage-sla',
+    name: 'ManageSLA',
+    component: LayoutAdmin,
+    children: [{
+      path: '',
+      component: () => import('@/views/ManageSLA/ManageSLAPage.vue'),
+      name: 'ManageSLAPage',
+      meta: {
+        page: 'ManageSLAPage'
+      },
+    }]
+  },
+  {
+    path: '/projects',
+    name: 'Projects',
+    component: LayoutAdmin,
+    children: [{
+      path: '',
+      component: () => import('@/views/Projects/ProjectsPage.vue'),
+      name: 'ProjectsPage',
+      meta: {
+        page: 'ProjectsPage'
       },
     }]
   },
@@ -178,7 +204,7 @@ const routes = [
     component: LayoutAdmin,
     children: [{
       path: '',
-      component: About,
+      component: () => import('@/views/Reports/ReportsPage.vue'),
       name: 'ReportsPage',
       meta: {
         page: 'ReportsPage'
