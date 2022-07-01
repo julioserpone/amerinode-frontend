@@ -85,7 +85,7 @@ const actions = [
   },
   {
     title: 'Statuses',
-    href: '#',
+    href: 'parametric/statuses',
     icon: ViewListIcon,
     description: 'All statuses available and categorized by modules',
   },

@@ -143,6 +143,38 @@ const routes = [
         meta: {
           page: 'ParametricPage'
         }
+      },
+      {
+        path: 'statuses',
+        name: 'StatusList',
+        component: () => import('@/views/Parametric/Statuses/StatusListPage.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'statuses/create',
+        name: 'StatusCreate',
+        component: () => import('@/views/Parametric/Statuses/StatusCreate.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'statuses/:statusId(\\d+)',
+        name: 'StatusShow',
+        component: () => import('@/views/Parametric/Statuses/StatusShow.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'statuses/:statusId(\\d+)/edit',
+        name: 'StatusEdit',
+        component: () => import('@/views/Parametric/Statuses/StatusEdit.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
       }
     ]
   },
