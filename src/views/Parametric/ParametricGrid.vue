@@ -73,7 +73,7 @@ const actions = [
   },
   {
     title: 'OEM',
-    href: '#',
+    href: 'parametric/oems',
     icon: CubeIcon,
     description: 'List of brands or OEMs to which we provide services',
   },
