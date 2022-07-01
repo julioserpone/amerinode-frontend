@@ -92,7 +92,7 @@
                   :showDialog="openDialogConfirm"
                   :title="'Inactive company'"
                   :message="messageDelete"
-                  @executeAction="deletePermission"
+                  @executeAction="deleteCompany"
                   @closeDialog="closeDeleteDialog"
               />
             </div>
@@ -160,7 +160,7 @@ function confirmDelete(data) {
   openDialogConfirm.value = true
 }
 
-const deletePermission = () => {
+const deleteCompany = () => {
   closeDeleteDialog()
   companyService.delete(company.value.id).then(x => {
     notify({
