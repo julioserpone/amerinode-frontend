@@ -92,7 +92,7 @@
                   :showDialog="openDialogConfirm"
                   :title="'Inactive technology'"
                   :message="messageDelete"
-                  @executeAction="deletePermission"
+                  @executeAction="deleteTechnology"
                   @closeDialog="closeDeleteDialog"
               />
             </div>
@@ -160,7 +160,7 @@ function confirmDelete(data) {
   openDialogConfirm.value = true
 }
 
-const deletePermission = () => {
+const deleteTechnology = () => {
   closeDeleteDialog()
   technologyService.delete(technology.value.id).then(x => {
     notify({
