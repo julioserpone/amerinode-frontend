@@ -111,6 +111,38 @@ const routes = [
         meta: {
           page: 'ParametricPage'
         }
+      },
+      {
+        path: 'oems',
+        name: 'OemList',
+        component: () => import('@/views/Parametric/Oems/OemListPage.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'oems/create',
+        name: 'OemCreate',
+        component: () => import('@/views/Parametric/Oems/OemCreate.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'oems/:oemId(\\d+)',
+        name: 'OemShow',
+        component: () => import('@/views/Parametric/Oems/OemShow.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'oems/:oemId(\\d+)/edit',
+        name: 'OemEdit',
+        component: () => import('@/views/Parametric/Oems/OemEdit.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
       }
     ]
   },
