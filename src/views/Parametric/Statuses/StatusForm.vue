@@ -5,7 +5,7 @@
         <div class="md:col-span-1">
           <div class="px-4 sm:px-0">
             <h3 class="text-lg font-medium leading-6 text-gray-900">Information</h3>
-            <p class="mt-1 text-sm text-gray-600">Descriptive information of the company.</p>
+            <p class="mt-1 text-sm text-gray-600">Descriptive information of the status.</p>
           </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
@@ -16,9 +16,20 @@
 
                   <div class="col-span-6 sm:col-span-5">
                     <base-input
-                        :id="'description-company'"
-                        :autocomplete="'description-company'"
-                        v-model="company.description"
+                        :id="'module'"
+                        :autocomplete="'module'"
+                        v-model="statusData.module"
+                        label="Module"
+                        type="text"
+                        :is-disabled="!canEdit"
+                    />
+                  </div>
+
+                  <div class="col-span-6 sm:col-span-5">
+                    <base-input
+                        :id="'description-status'"
+                        :autocomplete="'description-status'"
+                        v-model="statusData.description"
                         label="Description"
                         type="text"
                         :is-disabled="!canEdit"
@@ -109,7 +120,7 @@ onUpdated( () => {
 })
 
 const props = defineProps({
-  company: {
+  statusData: {
     type: Object
   },
   canEdit: {
@@ -120,7 +131,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  companyId: {
+  statusId: {
     type: String,
     default: ''
   },
@@ -137,7 +148,7 @@ function assignStatus() {
   if (data.assignList.value) {
     //Assign status
     statuses.value.forEach((element, index) => {
-      if (element.id === data.company.value.status) {
+      if (element.id === data.statusData.value.status) {
         selectedStatus.value = element
       }
     })
@@ -147,6 +158,6 @@ function assignStatus() {
 }
 const sendData = (event) => {
   event.preventDefault()
-  emit('save', { company: data.company.value, status: selectedStatus.value } )
+  emit('save', { data: data.statusData.value, status: selectedStatus.value } )
 }
 </script>
