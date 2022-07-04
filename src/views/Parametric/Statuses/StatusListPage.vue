@@ -80,11 +80,11 @@
                 <Column :exportable="false">
                   <template #body="slotProps">
                     <div class="ml-4 flex items-center md:ml-6">
-                      <router-link :to="{ name: 'CompanyShow', params: { companyId: slotProps.data.id }}" class="bg-white rounded-full p-1 mr-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amerinode-blue-500">
+                      <router-link :to="{ name: 'StatusShow', params: { statusId: slotProps.data.id }}" class="bg-white rounded-full p-1 mr-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amerinode-blue-500">
                         <EyeIcon class="h-6 w-6" aria-hidden="true" />
                         <span class="sr-only">show</span>
                       </router-link>
-                      <router-link :to="{ name: 'CompanyEdit', params: { companyId: slotProps.data.id }}" class="bg-white rounded-full p-1 mr-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amerinode-blue-500">
+                      <router-link :to="{ name: 'StatusEdit', params: { statusId: slotProps.data.id }}" class="bg-white rounded-full p-1 mr-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amerinode-blue-500">
                         <PencilIcon class="h-6 w-6" aria-hidden="true" />
                         <span class="sr-only">edit</span>
                       </router-link>
