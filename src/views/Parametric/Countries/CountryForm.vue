@@ -14,6 +14,43 @@
               <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
 
+                  <div class="col-span-6 sm:col-span-5">
+                    <Listbox as="div" v-model="selectedCountry" :disabled="!canEdit">
+                      <ListboxLabel class="block text-sm font-medium text-gray-700"> Select a country </ListboxLabel>
+                      <div class="relative mt-1">
+                        <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-amerinode-blue-500 focus:border-amerinode-blue-500 sm:text-sm"
+                                       :class="[ !canEdit ? 'disabled:opacity-75':'']">
+                          <span class="block truncate">{{ selectedCountry.name }}</span>
+                          <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                            <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </span>
+                        </ListboxButton>
+                        <transition
+                            leave-active-class="transition duration-100 ease-in"
+                            leave-from-class="opacity-100"
+                            leave-to-class="opacity-0"
+                        >
+                          <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            <ListboxOption
+                                v-slot="{ active, selected }"
+                                v-for="country in countries"
+                                :key="country.id"
+                                :value="country"
+                                as="template"
+                            >
+                              <li :class="[active ? 'bg-amerinode-blue-100 text-amerinode-blue-900' : 'text-gray-900','relative cursor-default select-none py-2 pl-10 pr-4']">
+                                <span :class="[selected ? 'font-medium' : 'font-normal','block truncate']">{{ country.name }}</span>
+                                <span v-if="selected" class="absolute inset-y-0 left-0 flex items-center pl-3 text-amerinode-blue-600">
+                                  <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                                </span>
+                              </li>
+                            </ListboxOption>
+                          </ListboxOptions>
+                        </transition>
+                      </div>
+                    </Listbox>
+                  </div>
+
                   <div class="col-span-6 sm:col-span-3">
                     <base-input
                         :id="'name-country'"
@@ -140,20 +177,33 @@ import {
 } from '@headlessui/vue'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
 import BaseInput from '@/components/BaseInput.vue'
+import countryService from "@/services/country.service";
 
+let countries = ref()
 let selectedStatus = ref({})
+let selectedCountry = ref({})
 let loaded = ref(false)
 const statuses = ref([
   { id: 'active', name: 'Active' },
   { id: 'inactive', name: 'Inactive' }
 ])
+
 onBeforeMount(() => {
+  console.log('onBeforeMount')
+  countryService.available().then(x => {
+    countries.value = x.data
+    selectedCountry.value = countries.value[0]
+    emit('isLoading', false)
+  }).catch(err => {
+  }).finally(() => {
+  })
   if (!data.modeEdit.value) {
     assignStatus()
     emit('isLoading', false)
   }
 })
 onUpdated( () => {
+  console.log('onUpdate')
   if (data.modeEdit.value) {
     if (!loaded.value) {
       assignStatus()
