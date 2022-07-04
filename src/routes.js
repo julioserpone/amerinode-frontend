@@ -175,6 +175,38 @@ const routes = [
         meta: {
           page: 'ParametricPage'
         }
+      },
+      {
+        path: 'countries',
+        name: 'CountryList',
+        component: () => import('@/views/Parametric/Countries/CountryListPage.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'countries/create',
+        name: 'CountryCreate',
+        component: () => import('@/views/Parametric/Countries/CountryCreate.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'countries/:countryId(\\d+)',
+        name: 'CountryShow',
+        component: () => import('@/views/Parametric/Countries/CountryShow.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'countries/:countryId(\\d+)/edit',
+        name: 'CountryEdit',
+        component: () => import('@/views/Parametric/Countries/CountryEdit.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
       }
     ]
   },
