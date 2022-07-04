@@ -5,13 +5,13 @@
       <div class="mx-auto">
         <breadcrumbs :trace-route="trace" />
         <div class="pb-5 border-b border-gray-200">
-          <h1 class="text-2xl font-semibold text-gray-900 pt-4">New company</h1>
+          <h1 class="text-2xl font-semibold text-gray-900 pt-4">New status</h1>
         </div>
       </div>
       <div class="mx-auto">
-        <CompanyForm
-            :company="companyData"
-            :company-id="companyId"
+        <StatusForm
+            :status-data="statusData"
+            :status-id="statusId"
             :assign-list="canAssign"
             :mode-edit="false"
             @isLoading="statusLoading"
@@ -24,16 +24,17 @@
 import { ref } from "vue";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
-import CompanyForm from '@/views/Parametric/Companies/CompanyForm.vue'
-import companyService from "@/services/company.service"
+import StatusForm from '@/views/Parametric/Statuses/StatusForm.vue'
+import statusService from "@/services/status.service"
 import {notify} from "notiwind"
 import {useRouter} from "vue-router"
 
 const router = useRouter()
 const canAssign = ref(false)
 let loading = ref(false)
-let companyId = ref('')
-let companyData = ref({
+let statusId = ref('')
+let statusData = ref({
+  "module": "",
   "description": "",
   "status": ""
 })
@@ -41,22 +42,22 @@ let companyData = ref({
 let trace = [
   { description: 'Home', pathName: 'HomePage', isLink: true, current: false },
   { description: 'Parametric', pathName: 'ParametricPage', isLink: true, current: false },
-  { description: 'Companies', pathName: 'CompanyList', isLink: true, current: false },
-  { description: 'Create', pathName: 'CompanyCreate', isLink: false, current: true }
+  { description: 'Statuses', pathName: 'StatusList', isLink: true, current: false },
+  { description: 'Create', pathName: 'StatusCreate', isLink: false, current: true }
 ]
 const saveData = (event) => {
   let data = {
-    'company': event.company,
+    'data': event.data,
     'status': event.status
   }
-  companyService.save(0, data).then(x => {
+  statusService.save(0, data).then(x => {
     notify({
       group: "top",
       title: "Update",
       text: x.data,
       type: "success"
     }, 5000)
-    router.push({ name: "CompanyList" })
+    router.push({ name: "StatusList" })
   }).catch(err => {
     let message = (err.code === "ERR_BAD_REQUEST") ? err.response.data.message : err.message;
     notify({
