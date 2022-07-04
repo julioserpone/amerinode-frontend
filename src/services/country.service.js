@@ -4,6 +4,9 @@ export default {
     list (params) {
         return httpService.get('countries', params)
     },
+    available (params) {
+        return httpService.get('countries/available', params)
+    },
     get (id) {
         return httpService.get(`countries/${id}`)
     },
