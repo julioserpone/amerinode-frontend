@@ -207,6 +207,38 @@ const routes = [
         meta: {
           page: 'ParametricPage'
         }
+      },
+      {
+        path: 'branches',
+        name: 'BranchList',
+        component: () => import('@/views/Parametric/Branches/BranchListPage.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'branches/create',
+        name: 'BranchCreate',
+        component: () => import('@/views/Parametric/Branches/BranchCreate.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'branches/:branchId(\\d+)',
+        name: 'BranchShow',
+        component: () => import('@/views/Parametric/Branches/BranchShow.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'branches/:branchId(\\d+)/edit',
+        name: 'BranchEdit',
+        component: () => import('@/views/Parametric/Branches/BranchEdit.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
       }
     ]
   },

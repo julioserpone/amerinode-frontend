@@ -79,7 +79,7 @@ const actions = [
   },
   {
     title: 'Branches',
-    href: '#',
+    href: 'parametric/branches',
     icon: TemplateIcon,
     description: 'Configuration of the branches, with assignment of country and company',
   },
