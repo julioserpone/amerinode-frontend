@@ -10,11 +10,11 @@
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
           <form action="#" method="POST">
-            <div class="shadow overflow-hidden sm:rounded-md">
+            <div class="shadow sm:rounded-md">
               <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
 
-                  <div class="col-span-6 sm:col-span-5">
+                  <div v-show="newRegister" class="col-span-6 sm:col-span-5">
                     <Listbox as="div" v-model="selectedCountry" :disabled="!canEdit">
                       <ListboxLabel class="block text-sm font-medium text-gray-700"> Select a country </ListboxLabel>
                       <div class="relative mt-1">
@@ -30,7 +30,7 @@
                             leave-from-class="opacity-100"
                             leave-to-class="opacity-0"
                         >
-                          <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                          <ListboxOptions class="absolute z-40 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                             <ListboxOption
                                 v-slot="{ active, selected }"
                                 v-for="country in countries"
@@ -51,7 +51,7 @@
                     </Listbox>
                   </div>
 
-                  <div class="col-span-6 sm:col-span-3">
+                  <div v-show="!newRegister" class="col-span-6 sm:col-span-3">
                     <base-input
                         :id="'name-country'"
                         :autocomplete="'name-country'"
@@ -62,7 +62,7 @@
                     />
                   </div>
 
-                  <div class="col-span-6 sm:col-span-3">
+                  <div v-show="!newRegister" class="col-span-6 sm:col-span-3">
                     <base-input
                         :id="'capital'"
                         :autocomplete="'capital'"
@@ -73,7 +73,7 @@
                     />
                   </div>
 
-                  <div class="col-span-6 sm:col-span-3">
+                  <div v-show="!newRegister" class="col-span-6 sm:col-span-3">
                     <base-input
                         :id="'code_iso'"
                         :autocomplete="'code_iso'"
@@ -84,7 +84,7 @@
                     />
                   </div>
 
-                  <div class="col-span-6 sm:col-span-3">
+                  <div v-show="!newRegister" class="col-span-6 sm:col-span-3">
                     <base-input
                         :id="'code_iso3'"
                         :autocomplete="'code_iso3'"
@@ -95,7 +95,7 @@
                     />
                   </div>
 
-                  <div class="col-span-6 sm:col-span-3">
+                  <div v-show="!newRegister" class="col-span-6 sm:col-span-3">
                     <base-input
                         :id="'currency'"
                         :autocomplete="'currency'"
@@ -106,7 +106,7 @@
                     />
                   </div>
 
-                  <div class="col-span-6 sm:col-span-3">
+                  <div v-show="!newRegister" class="col-span-6 sm:col-span-3">
                     <base-input
                         :id="'calling_code'"
                         :autocomplete="'calling_code'"
@@ -189,21 +189,23 @@ const statuses = ref([
 ])
 
 onBeforeMount(() => {
-  console.log('onBeforeMount')
-  countryService.available().then(x => {
-    countries.value = x.data
-    selectedCountry.value = countries.value[0]
-    emit('isLoading', false)
-  }).catch(err => {
-  }).finally(() => {
-  })
-  if (!data.modeEdit.value) {
-    assignStatus()
-    emit('isLoading', false)
+  if (data.newRegister.value) {
+    countryService.available().then(x => {
+      countries.value = x.data
+      selectedCountry.value = countries.value[0]
+      emit('isLoading', false)
+
+    }).catch(err => {
+    }).finally(() => {
+
+      if (!data.modeEdit.value) {
+        assignStatus()
+        emit('isLoading', false)
+      }
+    })
   }
 })
 onUpdated( () => {
-  console.log('onUpdate')
   if (data.modeEdit.value) {
     if (!loaded.value) {
       assignStatus()
@@ -232,6 +234,10 @@ const props = defineProps({
   modeEdit: {
     type: Boolean,
     default: true
+  },
+  newRegister: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -252,6 +258,6 @@ function assignStatus() {
 }
 const sendData = (event) => {
   event.preventDefault()
-  emit('save', { country: data.country.value, status: selectedStatus.value } )
+  emit('save', { country: selectedCountry.value, status: selectedStatus.value } )
 }
 </script>
