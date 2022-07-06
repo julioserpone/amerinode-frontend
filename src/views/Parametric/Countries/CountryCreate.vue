@@ -14,6 +14,7 @@
             :country-id="countryId"
             :assign-list="canAssign"
             :mode-edit="false"
+            :new-register="true"
             @isLoading="statusLoading"
             @save="saveData" />
       </div>
