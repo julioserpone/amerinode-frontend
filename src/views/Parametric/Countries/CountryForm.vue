@@ -15,40 +15,32 @@
                 <div class="grid grid-cols-6 gap-6">
 
                   <div v-show="newRegister" class="col-span-6 sm:col-span-5">
-                    <Listbox as="div" v-model="selectedCountry" :disabled="!canEdit">
-                      <ListboxLabel class="block text-sm font-medium text-gray-700"> Select a country </ListboxLabel>
+                    <Combobox as="div" v-model="selectedCountry">
+                      <ComboboxLabel class="block text-sm font-medium text-gray-700">Select a country</ComboboxLabel>
                       <div class="relative mt-1">
-                        <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-amerinode-blue-500 focus:border-amerinode-blue-500 sm:text-sm"
-                                       :class="[ !canEdit ? 'disabled:opacity-75':'']">
-                          <span class="block truncate">{{ selectedCountry.name }}</span>
-                          <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                            <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-                          </span>
-                        </ListboxButton>
-                        <transition
-                            leave-active-class="transition duration-100 ease-in"
-                            leave-from-class="opacity-100"
-                            leave-to-class="opacity-0"
-                        >
-                          <ListboxOptions class="absolute z-40 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                            <ListboxOption
-                                v-slot="{ active, selected }"
-                                v-for="country in countries"
-                                :key="country.id"
-                                :value="country"
-                                as="template"
-                            >
-                              <li :class="[active ? 'bg-amerinode-blue-100 text-amerinode-blue-900' : 'text-gray-900','relative cursor-default select-none py-2 pl-10 pr-4']">
-                                <span :class="[selected ? 'font-medium' : 'font-normal','block truncate']">{{ country.name }}</span>
-                                <span v-if="selected" class="absolute inset-y-0 left-0 flex items-center pl-3 text-amerinode-blue-600">
-                                  <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                        <ComboboxInput class="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-amerinode-blue-500 focus:outline-none focus:ring-1 focus:ring-amerinode-blue-500 sm:text-sm" @change="query = $event.target.value" :display-value="(country) => country?.name" />
+                        <ComboboxButton class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
+                          <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                        </ComboboxButton>
+
+                        <ComboboxOptions v-if="filteredCountry.length > 0" class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                          <ComboboxOption v-for="country in filteredCountry" :key="country.id" :value="country" as="template" v-slot="{ active, selected }">
+                            <li :class="['relative cursor-default select-none py-2 pl-3 pr-9', active ? 'bg-amerinode-blue-600 text-white' : 'text-gray-900']">
+                              <div class="flex items-center">
+                                <img :src="country.flag_url" alt="" class="h-6 w-6 flex-shrink-0 rounded-full" />
+                                <span :class="['ml-3 truncate', selected && 'font-semibold']">
+                                  {{ country.name }}
                                 </span>
-                              </li>
-                            </ListboxOption>
-                          </ListboxOptions>
-                        </transition>
+                              </div>
+
+                              <span v-if="selected" :class="['absolute inset-y-0 right-0 flex items-center pr-4', active ? 'text-white' : 'text-amerinode-blue-600']">
+                                <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                              </span>
+                            </li>
+                          </ComboboxOption>
+                        </ComboboxOptions>
                       </div>
-                    </Listbox>
+                    </Combobox>
                   </div>
 
                   <div v-show="!newRegister" class="col-span-6 sm:col-span-3">
@@ -167,32 +159,60 @@
   </div>
 </template>
 <script setup>
-import {ref, defineProps, defineEmits, toRefs, onUpdated, onBeforeMount } from "vue";
+import {ref, computed, defineProps, defineEmits, toRefs, onUpdated, onBeforeMount } from "vue";
 import {
   Listbox,
   ListboxLabel,
   ListboxButton,
   ListboxOptions,
   ListboxOption,
+  Combobox,
+  ComboboxLabel,
+  ComboboxInput,
+  ComboboxButton,
+  ComboboxOptions,
+  ComboboxOption,
+  TransitionRoot
 } from '@headlessui/vue'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
 import BaseInput from '@/components/BaseInput.vue'
 import countryService from "@/services/country.service";
 
-let countries = ref()
-let selectedStatus = ref({})
-let selectedCountry = ref({})
-let loaded = ref(false)
 const statuses = ref([
   { id: 'active', name: 'Active' },
   { id: 'inactive', name: 'Inactive' }
 ])
+let countries = []
+let selectedStatus = ref({})
+let selectedCountry = ref({
+  "name": "",
+  "capital": "",
+  "code_iso": "",
+  "code_iso3": "",
+  "currency": "",
+  "calling_code": "",
+  "flag_url": "",
+  "timezones": []
+})
+let query = ref('')
+let loaded = ref(false)
+
+let filteredCountry = computed(() =>
+    query.value === ''
+        ? countries
+        : countries.filter((country) =>
+            country.name
+                .toLowerCase()
+                .replace(/\s+/g, '')
+                .includes(query.value.toLowerCase().replace(/\s+/g, ''))
+        )
+)
 
 onBeforeMount(() => {
   if (data.newRegister.value) {
     countryService.available().then(x => {
-      countries.value = x.data
-      selectedCountry.value = countries.value[0]
+      countries = x.data
+      selectedCountry.value = countries[0]
       emit('isLoading', false)
 
     }).catch(err => {
