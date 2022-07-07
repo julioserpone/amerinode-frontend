@@ -171,8 +171,7 @@ import {
   ComboboxInput,
   ComboboxButton,
   ComboboxOptions,
-  ComboboxOption,
-  TransitionRoot
+  ComboboxOption
 } from '@headlessui/vue'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
 import BaseInput from '@/components/BaseInput.vue'
