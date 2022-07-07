@@ -42,7 +42,7 @@
                     <div href="#" class="flex-shrink-0 group block">
                       <div class="flex items-center">
                         <div>
-                          <img class="inline-block h-9 w-9 rounded-full" :src="data.country.flag_url" alt="" />
+                          <img :id="data.country.id" class="inline-block h-9 w-9 rounded-full" :src="data.country.flag_url" alt="" />
                         </div>
                         <div class="ml-3">
                           <p class="text-sm font-medium">{{ data.country.name }}</p>
@@ -165,7 +165,7 @@ function loadData() {
 
 function confirmDelete(data) {
   branch.value = data
-  messageDelete.value = "Are you sure you want to inactive the branch "+branch.value.description+"?"
+  messageDelete.value = "Are you sure you want to inactive the branch "+branch.value.country.name+" / "+branch.value.company.description+"?"
   openDialogConfirm.value = true
 }
 
