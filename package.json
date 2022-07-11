@@ -15,7 +15,7 @@
     "primeicons": "^5.0.0",
     "primevue": "^3.15.0",
     "vue": "^3.2.37",
-    "vue-router": "^4.0.16"
+    "vue-router": "^4.1.1"
   },
   "devDependencies": {
     "@headlessui/vue": "^1.6.5",
