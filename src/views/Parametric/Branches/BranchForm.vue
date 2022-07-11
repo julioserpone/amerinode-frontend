@@ -14,7 +14,7 @@
               <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid grid-cols-6 gap-6">
 
-                  <div class="col-span-6 sm:col-span-5 lg:col-span-5">
+                  <div class="col-span-6 sm:col-span-5 lg:col-span-3">
                     <Listbox as="div" v-model="selectedCountry" :disabled="!canEdit">
                       <ListboxLabel class="block text-sm font-medium text-gray-700"> Country </ListboxLabel>
                       <div class="relative mt-1">
@@ -51,7 +51,7 @@
                     </Listbox>
                   </div>
 
-                  <div class="col-span-6 sm:col-span-5 lg:col-span-5">
+                  <div class="col-span-6 sm:col-span-5 lg:col-span-3">
                     <Listbox as="div" v-model="selectedCompany" :disabled="!canEdit">
                       <ListboxLabel class="block text-sm font-medium text-gray-700"> Company </ListboxLabel>
                       <div class="relative mt-1">
@@ -138,7 +138,7 @@
   </div>
 </template>
 <script setup>
-import {ref, defineProps, defineEmits, toRefs, onUpdated, onBeforeMount } from "vue";
+import {ref, defineProps, defineEmits, toRefs, onBeforeMount } from "vue";
 import {
   Listbox,
   ListboxLabel,
@@ -155,16 +155,12 @@ let selectedCountry = ref({})
 let selectedCompany = ref({})
 let countries = ref()
 let companies = ref()
-let loaded = ref(false)
 const statuses = ref([
   { id: 'active', name: 'Active' },
   { id: 'inactive', name: 'Inactive' }
 ])
 onBeforeMount(() => {
-  /*if (!data.modeEdit.value) {
-    assignStatus()
-    emit('isLoading', false)
-  }*/
+
   companyService.list().then(x => {
     companies.value = x.data
     if (data.assignList.value) {
@@ -176,7 +172,7 @@ onBeforeMount(() => {
         }
       }
     } else {
-      selectedCountry.value = countries.value[0]
+      selectedCompany.value = companies.value[0]
     }
   }).catch(err => {
   }).finally(() => {
@@ -201,15 +197,6 @@ onBeforeMount(() => {
   }).finally(() => {
   })
 })
-/*onUpdated( () => {
-  if (data.modeEdit.value) {
-    if (!loaded.value) {
-      assignStatus()
-      emit('isLoading', false)
-      loaded.value = true
-    }
-  }
-})*/
 
 const props = defineProps({
   branch: {
