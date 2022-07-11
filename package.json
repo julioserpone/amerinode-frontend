@@ -18,7 +18,7 @@
     "vue-router": "^4.1.1"
   },
   "devDependencies": {
-    "@headlessui/vue": "^1.6.5",
+    "@headlessui/vue": "^1.6.6",
     "@heroicons/vue": "^1.0.6",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.5.2",
