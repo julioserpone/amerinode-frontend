@@ -285,14 +285,40 @@ const routes = [
     path: '/projects',
     name: 'Projects',
     component: LayoutAdmin,
-    children: [{
-      path: '',
-      component: () => import('@/views/Projects/ProjectsPage.vue'),
-      name: 'ProjectsPage',
-      meta: {
-        page: 'ProjectsPage'
+    children: [
+      {
+        path: '',
+        name: 'ProjectList',
+        component: () => import('@/views/Projects/ProjectListPage.vue'),
+        meta: {
+          page: 'ProjectsPage'
+        }
       },
-    }]
+      {
+        path: 'create',
+        name: 'ProjectCreate',
+        component: () => import('@/views/Projects/ProjectCreate.vue'),
+        meta: {
+          page: 'ProjectsPage'
+        }
+      },
+      {
+        path: ':projectId(\\d+)',
+        name: 'ProjectShow',
+        component: () => import('@/views/Projects/ProjectShow.vue'),
+        meta: {
+          page: 'ProjectsPage'
+        }
+      },
+      {
+        path: ':projectId(\\d+)/edit',
+        name: 'ProjectEdit',
+        component: () => import('@/views/Projects/ProjectEdit.vue'),
+        meta: {
+          page: 'ProjectsPage'
+        }
+      }
+    ]
   },
   {
     path: '/reports',
