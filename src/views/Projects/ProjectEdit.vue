@@ -18,9 +18,9 @@
         </div>
       </div>
       <div class="mx-auto">
-        <BranchForm
-            :branch="branchData"
-            :branch-id="branchId"
+        <ProjectForm
+            :project="projectData"
+            :project-id="projectId"
             :assign-list="canAssign"
             @isLoading="statusLoading"
             @save="saveData"/>
@@ -32,58 +32,77 @@
 import {onBeforeMount, ref} from "vue";
 import { useRouter, useRoute } from 'vue-router'
 import { notify } from "notiwind";
-import branchService from "@/services/branch.service";
+import projectService from "@/services/project.service";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
-import BranchForm from '@/views/Parametric/Branches/BranchForm.vue'
+import ProjectForm from '@/views/Projects/ProjectForm.vue'
 
 const route = useRoute()
 const router = useRouter()
 const canAssign = ref(true)
-let branchData = ref({
+let projectData = ref({
   "id": "",
-  "company_id": "",
-  "country_id": "",
-  "status": "active",
-  "company": {
+  "projectId": "",
+  "project_type_id": "",
+  "branch_id": "",
+  "name": "",
+  "description": "",
+  "status": "",
+  "project_type": {
     "id": "",
-    "companyId": "",
+    "service_type_id": "",
     "description": "",
-    "status": ""
+    "service_type": {
+      "id": "",
+      "description": "",
+    }
   },
-  "country": {
+  "branch": {
     "id": "",
-    "name": "",
-    "capital": "",
-    "code_iso": "",
-    "code_iso3": "",
-    "currency": "",
-    "calling_code": "",
-    "flag_url": "",
-    "status": ""
+    "branchId": "",
+    "company_id": "",
+    "country_id": "",
+    "status": "",
+    "company": {
+      "id": "",
+      "companyId": "",
+      "description": "",
+      "status": "",
+    },
+    "country": {
+      "id": "",
+      "name": "",
+      "capital": "",
+      "code_iso": "",
+      "code_iso3": "",
+      "currency": "",
+      "calling_code": "",
+      "flag_url": "",
+      "status": "",
+    }
   }
 })
 
 let loading = ref(true)
-let branchId = ref('')
+let projectId = ref('')
 let countryFlag = ref(String)
-let companyName = ref(String)
+let companyName = ref("")
 
 //for breadcrumbs
 let trace = [
   { description: 'Home', pathName: 'HomePage', isLink: true, current: false },
   { description: 'Parametric', pathName: 'ParametricPage', isLink: true, current: false },
-  { description: 'Branches', pathName: 'BranchList', isLink: true, current: false },
-  { description: 'Edit', pathName: 'BranchEdit', isLink: false, current: true }
+  { description: 'Projects', pathName: 'ProjectList', isLink: true, current: false },
+  { description: 'Edit', pathName: 'ProjectEdit', isLink: false, current: true }
 ]
 onBeforeMount( () => {
 
-  branchId.value = route.params.branchId
+  projectId.value = route.params.projectId
 
-  branchService.edit(branchId.value).then(x => {
-    branchData.value = x.data
-    countryFlag.value = x.data.country.flag_url
-    companyName.value = x.data.company.description
+  projectService.edit(projectId.value).then(x => {
+    projectData.value = x.data
+    countryFlag.value = x.data.branch.country.flag_url
+    companyName.value = x.data.name+' | '+x.data.branch.company.description
   }).catch(err => {
 
   }).finally(() => {
@@ -96,14 +115,14 @@ const saveData = (event) => {
     'company': event.company,
     'status': event.status
   }
-  branchService.save(branchId.value, data).then(x => {
+  projectService.save(projectId.value, data).then(x => {
     notify({
       group: "top",
       title: "Update",
       text: x.data,
       type: "success"
     }, 5000)
-    router.push({ name: "BranchList" })
+    router.push({ name: "ProjectList" })
   }).catch(err => {
     let message = (err.code === "ERR_BAD_REQUEST") ? err.response.data.message : err.message;
     notify({
