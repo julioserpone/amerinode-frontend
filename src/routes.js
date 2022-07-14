@@ -207,6 +207,38 @@ const routes = [
         meta: {
           page: 'ParametricPage'
         }
+      },
+      {
+        path: 'service-types',
+        name: 'ServiceTypeList',
+        component: () => import('@/views/Parametric/ServiceTypes/ServiceTypeListPage.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'service-types/create',
+        name: 'ServiceTypeCreate',
+        component: () => import('@/views/Parametric/ServiceTypes/ServiceTypeCreate.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'service-types/:serviceTypeId(\\d+)',
+        name: 'ServiceTypeShow',
+        component: () => import('@/views/Parametric/ServiceTypes/ServiceTypeShow.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'service-types/:serviceTypeId(\\d+)/edit',
+        name: 'ServiceTypeEdit',
+        component: () => import('@/views/Parametric/ServiceTypes/ServiceTypeEdit.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
       }
     ]
   },

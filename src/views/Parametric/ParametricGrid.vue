@@ -43,7 +43,7 @@ import {
   OfficeBuildingIcon,
   ChipIcon,
   CubeIcon,
-  TemplateIcon,
+  SupportIcon,
   ViewListIcon,
 } from '@heroicons/vue/outline'
 
@@ -78,10 +78,10 @@ const actions = [
     description: 'List of brands or OEMs to which we provide services',
   },
   {
-    title: 'Branches',
-    href: 'parametric/branches',
-    icon: TemplateIcon,
-    description: 'Configuration of the branches, with assignment of country and company',
+    title: 'Service types',
+    href: 'parametric/service-types',
+    icon: SupportIcon,
+    description: 'Types of services we provide',
   },
   {
     title: 'Statuses',
