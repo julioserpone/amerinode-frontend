@@ -5,7 +5,7 @@
         <div class="md:col-span-1">
           <div class="px-4 sm:px-0">
             <h3 class="text-lg font-medium leading-6 text-gray-900">Information</h3>
-            <p class="mt-1 text-sm text-gray-600">Relationship of the company with the country where the branch is located.</p>
+            <p class="mt-1 text-sm text-gray-600">Basic project information.</p>
           </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
@@ -25,7 +25,7 @@
                     />
                   </div>
 
-                  <div class="col-span-6 sm:col-span-5">
+                  <div class="col-span-6 sm:col-span-3">
                     <base-input
                         :id="'description'"
                         :autocomplete="'description'"
@@ -95,7 +95,7 @@
         <div class="md:col-span-1">
           <div class="px-4 sm:px-0">
             <h3 class="text-lg font-medium leading-6 text-gray-900">Branch</h3>
-            <p class="mt-1 text-sm text-gray-600">Assignment of Branch.</p>
+            <p class="mt-1 text-sm text-gray-600">Configuration of the branch where the project is located.</p>
           </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
@@ -146,31 +146,6 @@
                     </Listbox>
                   </div>
 
-                  <!--
-                  <div class="col-span-6 sm:col-span-5 lg:col-span-3">
-                    <span class="block text-sm font-medium text-gray-700">Country</span>
-                    <Dropdown :class="['w-full']" v-model="selectedCountry" :options="countries" optionLabel="name" placeholder="Select a Country" >
-                      <template #value="slotProps">
-                        <div v-if="slotProps.value">
-                          <div>{{slotProps.value.name}}</div>
-                        </div>
-                        <span v-else>
-                          {{slotProps.placeholder}}
-                        </span>
-                      </template>
-                      <template #option="slotProps">
-                        <div class="flex items-center">
-                          <div>
-                            <img class="inline-block h-4 w-4 rounded-full" :src="slotProps.option.flag_url" alt="" />
-                          </div>
-                          <div class="ml-3">
-                            <p class="text-sm text-gray-600">{{ slotProps.option.name }}</p>
-                          </div>
-                        </div>
-                      </template>
-                    </Dropdown>
-                  </div>
--->
                   <div class="col-span-6 sm:col-span-5 lg:col-span-3">
                     <Listbox as="div" v-model="selectedCompany" :disabled="!canEdit || isLoadingCompany">
                       <ListboxLabel class="block text-sm font-medium text-gray-700"> Company </ListboxLabel>
@@ -256,7 +231,7 @@ import companyService from "@/services/company.service";
 let selectedStatus = ref({})
 let selectedCountry = ref({})
 let selectedCompany = ref({})
-let isLoadingCompany = ref(false)
+let isLoadingCompany = ref(true)
 let countries = ref()
 let companies = ref()
 const statuses = ref([
@@ -278,25 +253,10 @@ onBeforeMount(() => {
     } else {
       selectedCountry.value = countries.value[0]
     }
-    assignStatus()
-    emit('isLoading', false)
-  }).catch(err => {
-  }).finally(() => {
-  })
 
-  companyService.list().then(x => {
-    companies.value = x.data
-    if (data.assignList.value) {
-      //Assign company
-      //Assign the same type of object to the list (for the cases in which it is an already registered company)
-      for (const [index, item] of Object.entries(companies.value)) {
-        if (item.id === data.project.value.branch.company.id) {
-          selectedCompany.value = companies.value[index]
-        }
-      }
-    } else {
-      selectedCompany.value = companies.value[0]
-    }
+    assignStatus()
+    loadCompany()
+    finishLoading()
   }).catch(err => {
   }).finally(() => {
   })
@@ -340,16 +300,39 @@ function assignStatus() {
   }
 }
 
+function loadCompany() {
+  companyService.byCountry(selectedCountry.value.id).then(x => {
+    companies.value = x.data
+    if (data.assignList.value) {
+      //Assign company
+      //Assign the same type of object to the list (for the cases in which it is an already registered company)
+      for (const [index, item] of Object.entries(companies.value)) {
+        if (item.id === data.project.value.branch.company.id) {
+          selectedCompany.value = companies.value[index]
+        }
+      }
+    } else {
+      selectedCompany.value = companies.value[0]
+    }
+    setTimeout(() => {
+      isLoadingCompany.value = false
+    }, 500)
+  }).catch(err => {
+  }).finally(() => {
+  })
+}
+
 function changeCompany(id) {
   isLoadingCompany.value = true
-  setTimeout(() => {
-    isLoadingCompany.value = false
-  }, 5000)
-  console.log(id)
+  loadCompany();
+}
+
+function finishLoading() {
+  emit('isLoading', false)
 }
 
 const sendData = (event) => {
   event.preventDefault()
-  emit('save', { country: selectedCountry.value, company: selectedCompany.value, status: selectedStatus.value } )
+  emit('save', { project: data.project.value, country: selectedCountry.value, company: selectedCompany.value, status: selectedStatus.value } )
 }
 </script>
