@@ -207,38 +207,6 @@ const routes = [
         meta: {
           page: 'ParametricPage'
         }
-      },
-      {
-        path: 'branches',
-        name: 'BranchList',
-        component: () => import('@/views/Parametric/Branches/BranchListPage.vue'),
-        meta: {
-          page: 'ParametricPage'
-        }
-      },
-      {
-        path: 'branches/create',
-        name: 'BranchCreate',
-        component: () => import('@/views/Parametric/Branches/BranchCreate.vue'),
-        meta: {
-          page: 'ParametricPage'
-        }
-      },
-      {
-        path: 'branches/:branchId(\\d+)',
-        name: 'BranchShow',
-        component: () => import('@/views/Parametric/Branches/BranchShow.vue'),
-        meta: {
-          page: 'ParametricPage'
-        }
-      },
-      {
-        path: 'branches/:branchId(\\d+)/edit',
-        name: 'BranchEdit',
-        component: () => import('@/views/Parametric/Branches/BranchEdit.vue'),
-        meta: {
-          page: 'ParametricPage'
-        }
       }
     ]
   },
@@ -280,6 +248,45 @@ const routes = [
         page: 'ManageSLAPage'
       },
     }]
+  },
+  {
+    path: '/branches',
+    name: 'Branches',
+    component: LayoutAdmin,
+    children: [
+      {
+        path: '',
+        name: 'BranchList',
+        component: () => import('@/views/Branches/BranchListPage.vue'),
+        meta: {
+          page: 'BranchesPage'
+        }
+      },
+      {
+        path: 'create',
+        name: 'BranchCreate',
+        component: () => import('@/views/Branches/BranchCreate.vue'),
+        meta: {
+          page: 'BranchesPage'
+        }
+      },
+      {
+        path: ':branchId(\\d+)',
+        name: 'BranchShow',
+        component: () => import('@/views/Branches/BranchShow.vue'),
+        meta: {
+          page: 'BranchesPage'
+        }
+      },
+      {
+        path: ':branchId(\\d+)/edit',
+        name: 'BranchEdit',
+        component: () => import('@/views/Branches/BranchEdit.vue'),
+        meta: {
+          page: 'BranchesPage'
+        }
+      }
+    ]
   },
   {
     path: '/projects',

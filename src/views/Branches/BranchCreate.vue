@@ -4,17 +4,8 @@
     <div v-show="!loading" class="px-4 py-4 sm:px-6 lg:px-8">
       <div class="mx-auto">
         <breadcrumbs :trace-route="trace" />
-        <div class="py-5 border-b border-gray-200">
-          <div href="#" class="flex-shrink-0 group block">
-            <div class="flex items-center">
-              <div>
-                <img class="inline-block h-9 w-9 rounded-full" :src="countryFlag" alt="" />
-              </div>
-              <div class="ml-3">
-                <p class="text-2xl font-semibold text-gray-900">{{ companyName }}</p>
-              </div>
-            </div>
-          </div>
+        <div class="pb-5 border-b border-gray-200">
+          <h1 class="text-2xl font-semibold text-gray-900 pt-4">New branch</h1>
         </div>
       </div>
       <div class="mx-auto">
@@ -22,24 +13,26 @@
             :branch="branchData"
             :branch-id="branchId"
             :assign-list="canAssign"
+            :mode-edit="false"
             @isLoading="statusLoading"
-            @save="saveData"/>
+            @save="saveData" />
       </div>
     </div>
   </main>
 </template>
 <script setup>
-import {onBeforeMount, ref} from "vue";
-import { useRouter, useRoute } from 'vue-router'
-import { notify } from "notiwind";
-import branchService from "@/services/branch.service";
+import { ref } from "vue";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
-import BranchForm from '@/views/Parametric/Branches/BranchForm.vue'
+import BranchForm from '@/views/Branches/BranchForm.vue'
+import branchService from "@/services/branch.service"
+import {notify} from "notiwind"
+import {useRouter} from "vue-router"
 
-const route = useRoute()
 const router = useRouter()
-const canAssign = ref(true)
+const canAssign = ref(false)
+let loading = ref(true)
+let branchId = ref('')
 let branchData = ref({
   "id": "",
   "company_id": "",
@@ -64,39 +57,18 @@ let branchData = ref({
   }
 })
 
-let loading = ref(true)
-let branchId = ref('')
-let countryFlag = ref(String)
-let companyName = ref(String)
-
-//for breadcrumbs
 let trace = [
   { description: 'Home', pathName: 'HomePage', isLink: true, current: false },
-  { description: 'Parametric', pathName: 'ParametricPage', isLink: true, current: false },
   { description: 'Branches', pathName: 'BranchList', isLink: true, current: false },
-  { description: 'Edit', pathName: 'BranchEdit', isLink: false, current: true }
+  { description: 'Create', pathName: 'BranchCreate', isLink: false, current: true }
 ]
-onBeforeMount( () => {
-
-  branchId.value = route.params.branchId
-
-  branchService.edit(branchId.value).then(x => {
-    branchData.value = x.data
-    countryFlag.value = x.data.country.flag_url
-    companyName.value = x.data.company.description
-  }).catch(err => {
-
-  }).finally(() => {
-
-  })
-})
 const saveData = (event) => {
   let data = {
     'country': event.country,
     'company': event.company,
     'status': event.status
   }
-  branchService.save(branchId.value, data).then(x => {
+  branchService.save(0, data).then(x => {
     notify({
       group: "top",
       title: "Update",
