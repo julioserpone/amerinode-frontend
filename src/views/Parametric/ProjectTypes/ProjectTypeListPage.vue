@@ -19,9 +19,9 @@
                     </div>
                     <div class="mt-4 sm:mt-0 sm:ml-16 inline-flex items-center sm:flex-none">
                       <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
-                      <router-link to="/branches/create" class="ml-4 inline-flex items-center justify-center rounded-md border border-transparent bg-amerinode-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amerinode-blue-700 focus:outline-none focus:ring-2 focus:ring-amerinode-blue-500 focus:ring-offset-2 sm:w-auto">
+                      <router-link to="/parametric/project-types/create" class="ml-4 inline-flex items-center justify-center rounded-md border border-transparent bg-amerinode-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amerinode-blue-700 focus:outline-none focus:ring-2 focus:ring-amerinode-blue-500 focus:ring-offset-2 sm:w-auto">
                         <PlusIcon class="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-                        Add project
+                        Add project type
                       </router-link>
                     </div>
                   </div>
