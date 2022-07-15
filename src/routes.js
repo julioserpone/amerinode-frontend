@@ -239,6 +239,38 @@ const routes = [
         meta: {
           page: 'ParametricPage'
         }
+      },
+      {
+        path: 'project-types',
+        name: 'ProjectTypeList',
+        component: () => import('@/views/Parametric/ProjectTypes/ProjectTypeListPage.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'project-types/create',
+        name: 'ProjectTypeCreate',
+        component: () => import('@/views/Parametric/ProjectTypes/ProjectTypeCreate.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'project-types/:projectTypeId(\\d+)',
+        name: 'ProjectTypeShow',
+        component: () => import('@/views/Parametric/ProjectTypes/ProjectTypeShow.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'project-types/:projectTypeId(\\d+)/edit',
+        name: 'ProjectTypeEdit',
+        component: () => import('@/views/Parametric/ProjectTypes/ProjectTypeEdit.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
       }
     ]
   },
