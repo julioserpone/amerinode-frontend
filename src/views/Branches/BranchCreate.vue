@@ -5,13 +5,13 @@
       <div class="mx-auto">
         <breadcrumbs :trace-route="trace" />
         <div class="pb-5 border-b border-gray-200">
-          <h1 class="text-2xl font-semibold text-gray-900 pt-4">New company</h1>
+          <h1 class="text-2xl font-semibold text-gray-900 pt-4">New branch</h1>
         </div>
       </div>
       <div class="mx-auto">
-        <CompanyForm
-            :company="companyData"
-            :company-id="companyId"
+        <BranchForm
+            :branch="branchData"
+            :branch-id="branchId"
             :assign-list="canAssign"
             :mode-edit="false"
             @isLoading="statusLoading"
@@ -24,39 +24,58 @@
 import { ref } from "vue";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
-import CompanyForm from '@/views/Parametric/Companies/CompanyForm.vue'
-import companyService from "@/services/company.service"
+import BranchForm from '@/views/Branches/BranchForm.vue'
+import branchService from "@/services/branch.service"
 import {notify} from "notiwind"
 import {useRouter} from "vue-router"
 
 const router = useRouter()
 const canAssign = ref(false)
-let loading = ref(false)
-let companyId = ref('')
-let companyData = ref({
-  "description": "",
-  "status": ""
+let loading = ref(true)
+let branchId = ref('')
+let branchData = ref({
+  "id": "",
+  "company_id": "",
+  "country_id": "",
+  "status": "active",
+  "company": {
+    "id": "",
+    "companyId": "",
+    "description": "",
+    "status": ""
+  },
+  "country": {
+    "id": "",
+    "name": "",
+    "capital": "",
+    "code_iso": "",
+    "code_iso3": "",
+    "currency": "",
+    "calling_code": "",
+    "flag_url": "",
+    "status": ""
+  }
 })
 
 let trace = [
   { description: 'Home', pathName: 'HomePage', isLink: true, current: false },
-  { description: 'Parametric', pathName: 'ParametricPage', isLink: true, current: false },
-  { description: 'Companies', pathName: 'CompanyList', isLink: true, current: false },
-  { description: 'Create', pathName: 'CompanyCreate', isLink: false, current: true }
+  { description: 'Branches', pathName: 'BranchList', isLink: true, current: false },
+  { description: 'Create', pathName: 'BranchCreate', isLink: false, current: true }
 ]
 const saveData = (event) => {
   let data = {
+    'country': event.country,
     'company': event.company,
     'status': event.status
   }
-  companyService.save(0, data).then(x => {
+  branchService.save(0, data).then(x => {
     notify({
       group: "top",
       title: "Update",
       text: x.data,
       type: "success"
     }, 5000)
-    router.push({ name: "CompanyList" })
+    router.push({ name: "BranchList" })
   }).catch(err => {
     let message = (err.code === "ERR_BAD_REQUEST") ? err.response.data.message : err.message;
     notify({

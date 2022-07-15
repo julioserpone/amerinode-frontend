@@ -19,7 +19,7 @@
                     </div>
                     <div class="mt-4 sm:mt-0 sm:ml-16 inline-flex items-center sm:flex-none">
                       <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
-                      <router-link to="/parametric/branches/create" class="ml-4 inline-flex items-center justify-center rounded-md border border-transparent bg-amerinode-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amerinode-blue-700 focus:outline-none focus:ring-2 focus:ring-amerinode-blue-500 focus:ring-offset-2 sm:w-auto">
+                      <router-link to="/branches/create" class="ml-4 inline-flex items-center justify-center rounded-md border border-transparent bg-amerinode-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amerinode-blue-700 focus:outline-none focus:ring-2 focus:ring-amerinode-blue-500 focus:ring-offset-2 sm:w-auto">
                         <PlusIcon class="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                         Add branch
                       </router-link>
@@ -122,7 +122,7 @@ import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
 import { PlusIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/vue/outline'
-import branchService from "../../../services/branch.service.js"
+import branchService from "../../services/branch.service.js"
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import DialogConfirm from '@/components/DialogConfirm.vue'
 
@@ -134,7 +134,6 @@ let openDialogConfirm = ref(false)
 let messageDelete = ref("")
 let trace = [
   { description: 'Home', pathName: 'HomePage', isLink: true, current: false },
-  { description: 'Parametric', pathName: 'ParametricPage', isLink: true, current: false },
   { description: 'Branches', pathName: 'BranchList', isLink: true, current: true }
 ]
 let statuses = ref([

@@ -6,7 +6,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <div class="py-4">
             <div class="rounded-lg bg-gray-200 overflow-hidden shadow divide-y divide-gray-200 sm:divide-y-0 sm:grid sm:grid-cols-2 sm:gap-px">
-              <div v-for="(action, actionIdx) in actions" :key="action.title" :class="[actionIdx === 0 ? 'rounded-tl-lg rounded-tr-lg sm:rounded-tr-none' : '', actionIdx === 1 ? 'sm:rounded-tr-lg' : '', actionIdx === actions.length - 2 ? 'sm:rounded-bl-lg' : '', actionIdx === actions.length - 1 ? 'rounded-bl-lg rounded-br-lg sm:rounded-bl-none' : '', 'relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-amerinode-blue-500']">
+              <div v-for="(action, actionIdx) in actions" :key="action.title" :class="[actionIdx === 0 ? 'rounded-tl-lg rounded-tr-lg sm:rounded-tr-none' : '', actionIdx === 1 ? 'sm:rounded-tr-lg' : '', (actionIdx > 0 && actionIdx === actions.length && (actionIdx % 2 === 0)) ? 'sm:rounded-bl-lg' : '', (actionIdx >= actions.length - 1)  ? 'rounded-bl-lg rounded-br-lg sm:rounded-bl-none' : '', 'relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-amerinode-blue-500']">
                 <div>
                   <span class='bg-amerinode-blue-50 text-amerinode-blue-700 rounded-lg inline-flex p-3 ring-4 ring-white'>
                     <component :is="action.icon" class="h-6 w-6" aria-hidden="true" />
@@ -43,7 +43,7 @@ import {
   OfficeBuildingIcon,
   ChipIcon,
   CubeIcon,
-  TemplateIcon,
+  SupportIcon,
   ViewListIcon,
 } from '@heroicons/vue/outline'
 
@@ -78,16 +78,22 @@ const actions = [
     description: 'List of brands or OEMs to which we provide services',
   },
   {
-    title: 'Branches',
-    href: 'parametric/branches',
-    icon: TemplateIcon,
-    description: 'Configuration of the branches, with assignment of country and company',
+    title: 'Service types',
+    href: 'parametric/service-types',
+    icon: SupportIcon,
+    description: 'Types of services we provide',
+  },
+  {
+    title: 'Project types',
+    href: 'parametric/project-types',
+    icon: SupportIcon,
+    description: 'Types of projects we provide',
   },
   {
     title: 'Statuses',
     href: 'parametric/statuses',
     icon: ViewListIcon,
     description: 'All statuses available and categorized by modules',
-  },
+  }
 ]
 </script>

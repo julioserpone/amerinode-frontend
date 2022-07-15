@@ -7,6 +7,9 @@ export default {
     get (id) {
         return httpService.get(`companies/${id}`)
     },
+    byCountry (idCountry) {
+        return httpService.get(`companies/byCountry/${idCountry}`)
+    },
     edit (id) {
         return httpService.get(`companies/${id}/edit`)
     },

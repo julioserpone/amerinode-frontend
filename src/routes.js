@@ -209,33 +209,65 @@ const routes = [
         }
       },
       {
-        path: 'branches',
-        name: 'BranchList',
-        component: () => import('@/views/Parametric/Branches/BranchListPage.vue'),
+        path: 'service-types',
+        name: 'ServiceTypeList',
+        component: () => import('@/views/Parametric/ServiceTypes/ServiceTypeListPage.vue'),
         meta: {
           page: 'ParametricPage'
         }
       },
       {
-        path: 'branches/create',
-        name: 'BranchCreate',
-        component: () => import('@/views/Parametric/Branches/BranchCreate.vue'),
+        path: 'service-types/create',
+        name: 'ServiceTypeCreate',
+        component: () => import('@/views/Parametric/ServiceTypes/ServiceTypeCreate.vue'),
         meta: {
           page: 'ParametricPage'
         }
       },
       {
-        path: 'branches/:branchId(\\d+)',
-        name: 'BranchShow',
-        component: () => import('@/views/Parametric/Branches/BranchShow.vue'),
+        path: 'service-types/:serviceTypeId(\\d+)',
+        name: 'ServiceTypeShow',
+        component: () => import('@/views/Parametric/ServiceTypes/ServiceTypeShow.vue'),
         meta: {
           page: 'ParametricPage'
         }
       },
       {
-        path: 'branches/:branchId(\\d+)/edit',
-        name: 'BranchEdit',
-        component: () => import('@/views/Parametric/Branches/BranchEdit.vue'),
+        path: 'service-types/:serviceTypeId(\\d+)/edit',
+        name: 'ServiceTypeEdit',
+        component: () => import('@/views/Parametric/ServiceTypes/ServiceTypeEdit.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'project-types',
+        name: 'ProjectTypeList',
+        component: () => import('@/views/Parametric/ProjectTypes/ProjectTypeListPage.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'project-types/create',
+        name: 'ProjectTypeCreate',
+        component: () => import('@/views/Parametric/ProjectTypes/ProjectTypeCreate.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'project-types/:projectTypeId(\\d+)',
+        name: 'ProjectTypeShow',
+        component: () => import('@/views/Parametric/ProjectTypes/ProjectTypeShow.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'project-types/:projectTypeId(\\d+)/edit',
+        name: 'ProjectTypeEdit',
+        component: () => import('@/views/Parametric/ProjectTypes/ProjectTypeEdit.vue'),
         meta: {
           page: 'ParametricPage'
         }
@@ -282,17 +314,82 @@ const routes = [
     }]
   },
   {
+    path: '/branches',
+    name: 'Branches',
+    component: LayoutAdmin,
+    children: [
+      {
+        path: '',
+        name: 'BranchList',
+        component: () => import('@/views/Branches/BranchListPage.vue'),
+        meta: {
+          page: 'BranchesPage'
+        }
+      },
+      {
+        path: 'create',
+        name: 'BranchCreate',
+        component: () => import('@/views/Branches/BranchCreate.vue'),
+        meta: {
+          page: 'BranchesPage'
+        }
+      },
+      {
+        path: ':branchId(\\d+)',
+        name: 'BranchShow',
+        component: () => import('@/views/Branches/BranchShow.vue'),
+        meta: {
+          page: 'BranchesPage'
+        }
+      },
+      {
+        path: ':branchId(\\d+)/edit',
+        name: 'BranchEdit',
+        component: () => import('@/views/Branches/BranchEdit.vue'),
+        meta: {
+          page: 'BranchesPage'
+        }
+      }
+    ]
+  },
+  {
     path: '/projects',
     name: 'Projects',
     component: LayoutAdmin,
-    children: [{
-      path: '',
-      component: () => import('@/views/Projects/ProjectsPage.vue'),
-      name: 'ProjectsPage',
-      meta: {
-        page: 'ProjectsPage'
+    children: [
+      {
+        path: '',
+        name: 'ProjectList',
+        component: () => import('@/views/Projects/ProjectListPage.vue'),
+        meta: {
+          page: 'ProjectsPage'
+        }
       },
-    }]
+      {
+        path: 'create',
+        name: 'ProjectCreate',
+        component: () => import('@/views/Projects/ProjectCreate.vue'),
+        meta: {
+          page: 'ProjectsPage'
+        }
+      },
+      {
+        path: ':projectId(\\d+)',
+        name: 'ProjectShow',
+        component: () => import('@/views/Projects/ProjectShow.vue'),
+        meta: {
+          page: 'ProjectsPage'
+        }
+      },
+      {
+        path: ':projectId(\\d+)/edit',
+        name: 'ProjectEdit',
+        component: () => import('@/views/Projects/ProjectEdit.vue'),
+        meta: {
+          page: 'ProjectsPage'
+        }
+      }
+    ]
   },
   {
     path: '/reports',
