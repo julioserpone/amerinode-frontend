@@ -22,6 +22,7 @@
                         label="Description"
                         type="text"
                         :is-disabled="!canEdit"
+                        :is-required="true"
                     />
                   </div>
 
