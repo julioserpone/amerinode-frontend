@@ -34,7 +34,7 @@ import { useRouter, useRoute } from 'vue-router'
 import branchService from "@/services/branch.service";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
-import BranchForm from '@/views/Parametric/Branches/BranchForm.vue'
+import BranchForm from '@/views/Branches/BranchForm.vue'
 
 const route = useRoute()
 const router = useRouter()

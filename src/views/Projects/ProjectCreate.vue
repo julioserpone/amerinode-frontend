@@ -24,7 +24,7 @@
 import { ref } from "vue";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
-import BranchForm from '@/views/Parametric/Branches/BranchForm.vue'
+import BranchForm from '@/views/Branches/BranchForm.vue'
 import branchService from "@/services/branch.service"
 import {notify} from "notiwind"
 import {useRouter} from "vue-router"
