@@ -183,7 +183,7 @@
                   </div>
 
                   <div class="col-span-6 sm:col-span-5 lg:col-span-3">
-                    <Listbox as="div" v-model="selectedCompany" :disabled="!canEdit || isLoadingCompany">
+                    <Listbox as="div" v-model="selectedCompany" :disabled="!canEdit || isLoadingCompany" aria-required="true">
                       <ListboxLabel class="block text-sm font-medium text-gray-700"> Company </ListboxLabel>
                       <div class="relative mt-1">
                         <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-amerinode-blue-500 focus:border-amerinode-blue-500 sm:text-sm"
@@ -360,11 +360,15 @@ function loadCompany() {
     companies.value = x.data
     if (data.assignList.value) {
       //Assign company
+      selectedCompany.value = {}
       //Assign the same type of object to the list (for the cases in which it is an already registered company)
       for (const [index, item] of Object.entries(companies.value)) {
         if (item.id === data.project.value.branch.company.id) {
           selectedCompany.value = companies.value[index]
         }
+      }
+      if (Object.keys(selectedCompany.value).length === 0) {
+        selectedCompany.value = companies.value[0]
       }
     } else {
       selectedCompany.value = companies.value[0]

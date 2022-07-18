@@ -91,7 +91,6 @@ let companyName = ref("")
 //for breadcrumbs
 let trace = [
   { description: 'Home', pathName: 'HomePage', isLink: true, current: false },
-  { description: 'Parametric', pathName: 'ParametricPage', isLink: true, current: false },
   { description: 'Projects', pathName: 'ProjectList', isLink: true, current: false },
   { description: 'Edit', pathName: 'ProjectEdit', isLink: false, current: true }
 ]
@@ -110,7 +109,7 @@ onBeforeMount( () => {
   })
 })
 const saveData = (event) => {
-  console.log(event)
+  //console.log(event)
   let data = {
     'project': event.project,
     'project_type': event.project_type,
