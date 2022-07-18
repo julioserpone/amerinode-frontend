@@ -30,7 +30,7 @@
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-vue": "^9.2.0",
     "prettier-plugin-tailwindcss": "^0.1.12",
-    "tailwindcss": "^3.1.4",
+    "tailwindcss": "^3.1.6",
     "vite": "^2.9.14",
     "vue-eslint-parser": "^9.0.3"
   }
