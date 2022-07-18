@@ -37,6 +37,43 @@
                   </div>
 
                   <div class="col-span-6 sm:col-span-3 lg:col-span-3">
+                    <Listbox as="div" v-model="selectedProjectType" :disabled="!canEdit">
+                      <ListboxLabel class="block text-sm font-medium text-gray-700"> Project type </ListboxLabel>
+                      <div class="relative mt-1">
+                        <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-amerinode-blue-500 focus:border-amerinode-blue-500 sm:text-sm"
+                                       :class="[ !canEdit ? 'disabled:opacity-75':'']">
+                          <span class="block truncate">{{ selectedProjectType.description }}</span>
+                          <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                            <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </span>
+                        </ListboxButton>
+                        <transition
+                            leave-active-class="transition duration-100 ease-in"
+                            leave-from-class="opacity-100"
+                            leave-to-class="opacity-0"
+                        >
+                          <ListboxOptions class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            <ListboxOption
+                                v-slot="{ active, selected }"
+                                v-for="project_type in projectTypes"
+                                :key="project_type.id"
+                                :value="project_type"
+                                as="template"
+                            >
+                              <li :class="[active ? 'bg-amerinode-blue-100 text-amerinode-blue-900' : 'text-gray-900','relative cursor-default select-none py-2 pl-10 pr-4']">
+                                <span :class="[selected ? 'font-medium' : 'font-normal','block truncate']">{{ project_type.description }}</span>
+                                <span v-if="selected" class="absolute inset-y-0 left-0 flex items-center pl-3 text-amerinode-blue-600">
+                                  <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                                </span>
+                              </li>
+                            </ListboxOption>
+                          </ListboxOptions>
+                        </transition>
+                      </div>
+                    </Listbox>
+                  </div>
+
+                  <div class="col-span-6 sm:col-span-3 lg:col-span-3">
                     <Listbox as="div" v-model="selectedStatus" :disabled="!canEdit">
                       <ListboxLabel class="block text-sm font-medium text-gray-700"> Status </ListboxLabel>
                       <div class="relative mt-1">
@@ -134,7 +171,6 @@
                                   <img :src="country.flag_url" alt="" class="h-6 w-6 flex-shrink-0 rounded-full" />
                                   <span :class="['ml-3 truncate', selected && 'font-semibold']">{{ country.name }}</span>
                                 </div>
-                                <!--<span :class="[selected ? 'font-medium' : 'font-normal','block truncate']">{{ country.name }}</span>-->
                                 <span v-if="selected" class="absolute inset-y-0 right-0 flex items-center pr-4 text-amerinode-blue-600">
                                   <CheckIcon class="h-5 w-5" aria-hidden="true" />
                                 </span>
@@ -147,7 +183,7 @@
                   </div>
 
                   <div class="col-span-6 sm:col-span-5 lg:col-span-3">
-                    <Listbox as="div" v-model="selectedCompany" :disabled="!canEdit || isLoadingCompany">
+                    <Listbox as="div" v-model="selectedCompany" :disabled="!canEdit || isLoadingCompany" aria-required="true">
                       <ListboxLabel class="block text-sm font-medium text-gray-700"> Company </ListboxLabel>
                       <div class="relative mt-1">
                         <ListboxButton class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-amerinode-blue-500 focus:border-amerinode-blue-500 sm:text-sm"
@@ -222,23 +258,42 @@ import {
   ListboxOptions,
   ListboxOption,
 } from '@headlessui/vue'
-import Dropdown from 'primevue/dropdown';
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
 import BaseInput from '@/components/BaseInput.vue'
 import countryService from "@/services/country.service";
 import companyService from "@/services/company.service";
+import projectTypeService from "@/services/project_type.service";
 
 let selectedStatus = ref({})
 let selectedCountry = ref({})
 let selectedCompany = ref({})
+let selectedProjectType = ref({})
 let isLoadingCompany = ref(true)
 let countries = ref()
 let companies = ref()
+let projectTypes = ref()
 const statuses = ref([
   { id: 'active', name: 'Active' },
   { id: 'inactive', name: 'Inactive' }
 ])
 onBeforeMount(() => {
+
+  projectTypeService.list().then(x => {
+    projectTypes.value = x.data
+    if (data.assignList.value) {
+      //Assign project type
+      //Assign the same type of object to the list (for the cases in which it is an already registered project type)
+      for (const [index, item] of Object.entries(projectTypes.value)) {
+        if (item.id === data.project.value.project_type.id) {
+          selectedProjectType.value = projectTypes.value[index]
+        }
+      }
+    } else {
+      selectedProjectType.value = projectTypes.value[0]
+    }
+  }).catch(err => {
+  }).finally(() => {
+  })
 
   countryService.list().then(x => {
     countries.value = x.data
@@ -305,11 +360,15 @@ function loadCompany() {
     companies.value = x.data
     if (data.assignList.value) {
       //Assign company
+      selectedCompany.value = {}
       //Assign the same type of object to the list (for the cases in which it is an already registered company)
       for (const [index, item] of Object.entries(companies.value)) {
         if (item.id === data.project.value.branch.company.id) {
           selectedCompany.value = companies.value[index]
         }
+      }
+      if (Object.keys(selectedCompany.value).length === 0) {
+        selectedCompany.value = companies.value[0]
       }
     } else {
       selectedCompany.value = companies.value[0]
@@ -333,6 +392,12 @@ function finishLoading() {
 
 const sendData = (event) => {
   event.preventDefault()
-  emit('save', { project: data.project.value, country: selectedCountry.value, company: selectedCompany.value, status: selectedStatus.value } )
+  emit('save', {
+    project: data.project.value,
+    project_type: selectedProjectType.value,
+    country: selectedCountry.value,
+    company: selectedCompany.value,
+    status: selectedStatus.value
+  })
 }
 </script>

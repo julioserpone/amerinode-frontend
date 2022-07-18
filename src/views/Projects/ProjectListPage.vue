@@ -146,7 +146,7 @@ import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
 import { FilterMatchMode, FilterOperator } from 'primevue/api';
 import { PlusIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/vue/outline'
-import projectService from "../../services/project.service.js"
+import projectService from "@/services/project.service.js"
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import DialogConfirm from '@/components/DialogConfirm.vue'
 
