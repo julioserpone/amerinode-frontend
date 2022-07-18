@@ -109,7 +109,7 @@ onBeforeMount( () => {
   })
 })
 const saveData = (event) => {
-  //console.log(event)
+
   let data = {
     'project': event.project,
     'project_type': event.project_type,
