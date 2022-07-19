@@ -367,10 +367,12 @@ function loadCompany() {
           selectedCompany.value = companies.value[index]
         }
       }
+      //If the associated company is not currently related to another country, one is selected by default
       if (Object.keys(selectedCompany.value).length === 0) {
         selectedCompany.value = companies.value[0]
       }
     } else {
+      //Selected by default
       selectedCompany.value = companies.value[0]
     }
     setTimeout(() => {
