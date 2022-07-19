@@ -25,8 +25,8 @@ First-party plugins needed for Tailwind UI:
 ### Getting Started
 
 ```sh
-git clone https://github.com/julioserpone/amerinode-frontend.git
-cd amerinode-frontend
+git clone https://github.com/julioserpone/technnical-frontend.git
+cd technnical-frontend
 ```
 
 ```sh
@@ -35,4 +35,4 @@ npm run dev
 ```
 And that's it.
 
-Important: Requires the backend application [amerinode-backend](https://github.com/julioserpone/amerinode-backend)
+Important: Requires the backend application [technnical-backend](https://github.com/julioserpone/technnical-backend)
