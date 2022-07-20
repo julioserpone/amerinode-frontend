@@ -5,13 +5,13 @@
       <div class="mx-auto">
         <breadcrumbs :trace-route="trace" />
         <div class="pb-5 border-b border-gray-200">
-          <h1 class="text-2xl font-semibold text-gray-900 pt-4">Company {{ companyName }}</h1>
+          <h1 class="text-2xl font-semibold text-gray-900 pt-4">Status {{ statusName }}</h1>
         </div>
       </div>
       <div class="mx-auto">
-        <CompanyForm
-            :company="companyData"
-            :company-id="companyId"
+        <StatusForm
+            :status-data="statusData"
+            :status-id="statusId"
             :assign-list="canAssign"
             :can-edit="canEdit"
             @isLoading="statusLoading" />
@@ -22,38 +22,39 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { useRouter, useRoute } from 'vue-router'
-import companyService from "@/services/company.service";
+import statusService from "@/services/status.service";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
-import CompanyForm from '@/views/Parametric/Companies/CompanyForm.vue'
+import StatusForm from '@/views/Parametric/Statuses/StatusForm.vue'
 
 const route = useRoute()
 const router = useRouter()
 const canEdit = ref(false)
 const canAssign = ref(true)
-let companyData = ref({
+let statusData = ref({
+  "module": "",
   "description": "",
   "status": ""
 })
 
 let loading = ref(true)
-let companyId = ref('')
-let companyName = ref(String)
+let statusId = ref('')
+let statusName = ref(String)
 
 //for breadcrumbs
 let trace = [
   { description: 'Home', pathName: 'HomePage', isLink: true, current: false },
   { description: 'Parametric', pathName: 'ParametricPage', isLink: true, current: false },
-  { description: 'Companies', pathName: 'CompanyList', isLink: true, current: false },
-  { description: 'Show', pathName: 'CompanyShow', isLink: false, current: true }
+  { description: 'Statuses', pathName: 'StatusList', isLink: true, current: false },
+  { description: 'Show', pathName: 'StatusShow', isLink: false, current: true }
 ]
 onBeforeMount( () => {
 
-  companyId.value = route.params.companyId
+  statusId.value = route.params.statusId
 
-  companyService.get(companyId.value).then(x => {
-    companyData.value = x.data
-    companyName.value = x.data.description
+  statusService.get(statusId.value).then(x => {
+    statusData.value = x.data
+    statusName.value = x.data.description
   }).catch(err => {
   }).finally(() => {
   })
