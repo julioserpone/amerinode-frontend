@@ -15,6 +15,7 @@
     "primeicons": "^5.0.0",
     "primevue": "^3.15.0",
     "vue": "^3.2.37",
+    "vue-accessible-color-picker": "^4.0.3",
     "vue-router": "^4.1.2"
   },
   "devDependencies": {

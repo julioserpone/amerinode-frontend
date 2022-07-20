@@ -5,13 +5,13 @@
       <div class="mx-auto">
         <breadcrumbs :trace-route="trace" />
         <div class="pb-5 border-b border-gray-200">
-          <h1 class="text-2xl font-semibold text-gray-900 pt-4">Status {{ statusName }}</h1>
+          <h1 class="text-2xl font-semibold text-gray-900 pt-4">Severity {{ severityName }}</h1>
         </div>
       </div>
       <div class="mx-auto">
-        <StatusForm
-            :status-data="statusData"
-            :status-id="statusId"
+        <SeverityForm
+            :severity-data="severityData"
+            :severity-id="severityId"
             :assign-list="canAssign"
             :can-edit="canEdit"
             @isLoading="statusLoading" />
@@ -22,39 +22,41 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { useRouter, useRoute } from 'vue-router'
-import statusService from "@/services/status.service";
+import severityService from "@/services/severity.service";
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import LoadingContent from '@/components/LoadingContent.vue'
-import StatusForm from '@/views/Parametric/Statuses/StatusForm.vue'
+import SeverityForm from '@/views/Parametric/Severities/SeverityForm.vue'
 
 const route = useRoute()
 const router = useRouter()
 const canEdit = ref(false)
 const canAssign = ref(true)
-let statusData = ref({
-  "module": "",
+let severityData = ref({
+  "code": "",
+  "name": "",
   "description": "",
+  "color": "",
   "status": ""
 })
 
 let loading = ref(true)
-let statusId = ref('')
-let statusName = ref(String)
+let severityId = ref('')
+let severityName = ref(String)
 
 //for breadcrumbs
 let trace = [
   { description: 'Home', pathName: 'HomePage', isLink: true, current: false },
   { description: 'Parametric', pathName: 'ParametricPage', isLink: true, current: false },
-  { description: 'Statuses', pathName: 'StatusList', isLink: true, current: false },
-  { description: 'Show', pathName: 'StatusShow', isLink: false, current: true }
+  { description: 'Severities', pathName: 'SeverityList', isLink: true, current: false },
+  { description: 'Show', pathName: 'SeverityShow', isLink: false, current: true }
 ]
 onBeforeMount( () => {
 
-  statusId.value = route.params.statusId
+  severityId.value = route.params.severityId
 
-  statusService.get(statusId.value).then(x => {
-    statusData.value = x.data
-    statusName.value = x.data.description
+  severityService.get(severityId.value).then(x => {
+    severityData.value = x.data
+    severityName.value = x.data.name
   }).catch(err => {
   }).finally(() => {
   })

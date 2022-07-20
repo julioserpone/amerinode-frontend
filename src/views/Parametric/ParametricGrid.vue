@@ -45,6 +45,7 @@ import {
   CubeIcon,
   SupportIcon,
   ViewListIcon,
+  FlagIcon
 } from '@heroicons/vue/outline'
 
 let trace = [
@@ -94,6 +95,12 @@ const actions = [
     href: 'parametric/statuses',
     icon: ViewListIcon,
     description: 'All statuses available and categorized by modules',
+  },
+  {
+    title: 'Severities',
+    href: 'parametric/severities',
+    icon: FlagIcon,
+    description: 'All severities available',
   }
 ]
 </script>

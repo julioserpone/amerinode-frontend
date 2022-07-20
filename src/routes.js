@@ -271,6 +271,38 @@ const routes = [
         meta: {
           page: 'ParametricPage'
         }
+      },
+      {
+        path: 'severities',
+        name: 'SeverityList',
+        component: () => import('@/views/Parametric/Severities/SeverityListPage.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'severities/create',
+        name: 'SeverityCreate',
+        component: () => import('@/views/Parametric/Severities/SeverityCreate.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'severities/:severityId(\\d+)',
+        name: 'SeverityShow',
+        component: () => import('@/views/Parametric/Severities/SeverityShow.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
+      },
+      {
+        path: 'severities/:severityId(\\d+)/edit',
+        name: 'SeverityEdit',
+        component: () => import('@/views/Parametric/Severities/SeverityEdit.vue'),
+        meta: {
+          page: 'ParametricPage'
+        }
       }
     ]
   },
