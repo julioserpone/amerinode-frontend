@@ -85,17 +85,20 @@
                     </Listbox>
                   </div>
 
-                  <div class="col-span-6 sm:col-span-5">
+                  <div v-if="canEdit" class="col-span-6 sm:col-span-5">
                     <ColorSelector
                         v-model="severityData.color"
                         :label="'Color'"
-                        :visible-formats="['hex','rgb']"
+                        :visible-formats="['hex']"
                         :alpha-channel="'hide'"
                         :default-format="'hex'"
                         @saveColor="changedColor"
                     />
                   </div>
-
+                  <div v-else class="col-span-6 sm:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700">Color</label>
+                    <span class="mt-1 w-full h-10 block rounded-md" v-bind:style="{ 'background-color': severityData.color}" />
+                  </div>
                 </div>
               </div>
               <div v-show="canEdit" class="px-4 py-3 bg-gray-50 text-right sm:px-6">
