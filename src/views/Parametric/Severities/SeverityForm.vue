@@ -16,35 +16,38 @@
 
                   <div class="col-span-6 sm:col-span-3">
                     <base-input
-                        :id="'code'"
+                        :id="'code-severity'"
                         :autocomplete="'code-severity'"
                         v-model="severityData.code"
                         label="Code"
                         type="text"
                         :is-disabled="!canEdit"
+                        :is-required="true"
                     />
                   </div>
 
                   <div class="col-span-6 sm:col-span-3">
                     <base-input
-                        :id="'name'"
-                        :autocomplete="'code-name'"
+                        :id="'name-severity'"
+                        :autocomplete="'name-severity'"
                         v-model="severityData.name"
                         label="Name"
                         type="text"
                         :is-disabled="!canEdit"
+                        :is-required="true"
                     />
                   </div>
 
 
                   <div class="col-span-6 sm:col-span-3">
                     <base-input
-                        :id="'description'"
+                        :id="'description-severity'"
                         :autocomplete="'description-severity'"
                         v-model="severityData.description"
                         label="Description"
                         type="text"
                         :is-disabled="!canEdit"
+                        :is-required="true"
                     />
                   </div>
 
@@ -85,20 +88,18 @@
                     </Listbox>
                   </div>
 
-                  <div v-if="canEdit" class="col-span-6 sm:col-span-5">
+                  <div class="col-span-6 lg:col-span-3 md:col-span-5 sm:col-span-3">
                     <ColorSelector
                         v-model="severityData.color"
                         :label="'Color'"
                         :visible-formats="['hex']"
                         :alpha-channel="'hide'"
                         :default-format="'hex'"
+                        :is-disabled="!canEdit"
                         @saveColor="changedColor"
                     />
                   </div>
-                  <div v-else class="col-span-6 sm:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700">Color</label>
-                    <span class="mt-1 w-full h-10 block rounded-md" v-bind:style="{ 'background-color': severityData.color}" />
-                  </div>
+
                 </div>
               </div>
               <div v-show="canEdit" class="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -112,19 +113,6 @@
 
   </div>
 </template>
-<style scoped>
-.sr-only {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-  white-space: nowrap;
-}
-</style>
 <script setup>
 import {ref, defineProps, defineEmits, toRefs, onUpdated, onBeforeMount } from "vue";
 import {
@@ -173,7 +161,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  statusId: {
+  severityId: {
     type: String,
     default: ''
   },
