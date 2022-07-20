@@ -66,6 +66,7 @@ onBeforeMount( () => {
 const saveData = (event) => {
   let data = {
     'data': event.data,
+    'color': event.color,
     'status': event.status
   }
   severityService.save(severityId.value, data).then(x => {
