@@ -26,7 +26,8 @@ import {
   UserGroupIcon,
   DocumentReportIcon,
   UsersIcon,
-  TemplateIcon
+  TemplateIcon,
+  FlagIcon
 } from '@heroicons/vue/outline'
 
 //global declare for layoutAdmin
@@ -74,6 +75,9 @@ onBeforeMount(() => {
         break;
       case 'TemplateIcon':
         item.icon = TemplateIcon
+        break;
+      case 'FlagIcon':
+        item.icon = FlagIcon
         break;
     }
     item.current = false;
