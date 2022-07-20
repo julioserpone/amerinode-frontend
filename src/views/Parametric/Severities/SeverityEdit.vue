@@ -11,7 +11,7 @@
       <div class="mx-auto">
         <SeverityForm
             :severity-data="severityData"
-            :status-id="severityId"
+            :severity-id="severityId"
             :assign-list="canAssign"
             @isLoading="statusLoading"
             @save="saveData"/>
