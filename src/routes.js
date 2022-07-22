@@ -333,17 +333,43 @@ const routes = [
     }]
   },
   {
-    path: '/manage-sla',
-    name: 'ManageSLA',
+    path: '/sla',
+    name: 'Sla',
     component: LayoutAdmin,
-    children: [{
-      path: '',
-      component: () => import('@/views/ManageSLA/ManageSLAPage.vue'),
-      name: 'ManageSLAPage',
-      meta: {
-        page: 'ManageSLAPage'
+    children: [
+      {
+        path: '',
+        name: 'SlaList',
+        component: () => import('@/views/Sla/SlaListPage.vue'),
+        meta: {
+          page: 'BranchesPage'
+        }
       },
-    }]
+      {
+        path: 'create',
+        name: 'SlaCreate',
+        component: () => import('@/views/Sla/SlaCreate.vue'),
+        meta: {
+          page: 'SlaPage'
+        }
+      },
+      {
+        path: ':slaId(\\d+)',
+        name: 'SlaShow',
+        component: () => import('@/views/Sla/SlaShow.vue'),
+        meta: {
+          page: 'SlaPage'
+        }
+      },
+      {
+        path: ':slaId(\\d+)/edit',
+        name: 'SlaEdit',
+        component: () => import('@/views/Sla/SlaEdit.vue'),
+        meta: {
+          page: 'SlaPage'
+        }
+      }
+    ]
   },
   {
     path: '/branches',
